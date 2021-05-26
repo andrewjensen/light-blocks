@@ -1,0 +1,16 @@
+{
+  "name": "light-blocks",
+  "version": "0.0.0",
+  "description": "",
+  "main": "toggleLights.js",
+  "scripts": {
+    "start": "node ./toggleLights.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "node-hue-api": "^4.0.0"
+  }
+}
