@@ -37,21 +37,14 @@ const INITIAL_XML = `
   <xml xmlns="http://www.w3.org/1999/xhtml"></xml>
 `;
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const EditorContainer = styled.div`
-  flex-grow: 1;
-`;
-
 function App() {
+  const handleRun = () => {
+    console.log('TODO: handle run');
+  }
+
   return (
     <Container>
-      <TopBar />
+      <TopBar onRun={handleRun} />
       <EditorContainer>
         <BlocklyEditor
           wrapperDivClassName="fill-height"
@@ -72,3 +65,14 @@ function App() {
 }
 
 export default App;
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const EditorContainer = styled.main`
+  flex-grow: 1;
+`;
