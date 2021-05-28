@@ -4,12 +4,21 @@ import TopBar from './TopBar';
 import Editor from './Editor';
 import { useState } from 'react';
 
+const SERVER_HOST = 'http://localhost:4000';
+
 function App() {
   const [program, setProgram] = useState<string>('');
 
-  const handleRun = () => {
+  const handleRun = async () => {
     console.log('TODO: handle run');
     console.log(program);
+
+    const response = await fetch(`${SERVER_HOST}/program`, {
+      method: 'POST',
+      body: program
+    });
+    const body = await response.text();
+    console.log('response body:', body);
   }
 
   const handleUpdateProgram = (programText: string) => {
