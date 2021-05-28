@@ -1,6 +1,6 @@
-import Blockly, { Block } from 'blockly';
 import { BlocklyEditor } from 'react-blockly';
 
+import { defineBlocks } from './blocks';
 import './App.css';
 
 interface ToolboxCategory {
@@ -18,6 +18,8 @@ interface ToolboxBlock {
 
 type CustomToolboxCategory = 'VARIABLE' | 'PROCEDURE';
 
+defineBlocks();
+
 const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
     name: 'Colors',
@@ -33,68 +35,6 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
 const INITIAL_XML = `
   <xml xmlns="http://www.w3.org/1999/xhtml"></xml>
 `;
-
-Blockly.Blocks['start'] = {
-  init: function() {
-    let block = this as Block;
-
-    block.appendDummyInput()
-        .appendField("when the program starts, do:");
-    block.setNextStatement(true, null);
-    block.setColour(230);
-    block.setTooltip("");
-    block.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['set_color'] = {
-  init: function() {
-    let block = this as Block;
-    block.appendDummyInput()
-        .appendField("set color to");
-    block.appendValueInput("H")
-        .setCheck(null)
-        .appendField("H");
-    block.appendValueInput("S")
-        .setCheck(null)
-        .appendField("S");
-    block.appendValueInput("B")
-        .setCheck(null)
-        .appendField("B");
-    block.setInputsInline(true);
-    block.setPreviousStatement(true, null);
-    block.setNextStatement(true, null);
-    block.setColour(230);
-    block.setTooltip("");
-    block.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['light_on'] = {
-  init: function() {
-    let block = this as Block;
-    block.appendDummyInput()
-        .appendField("turn the light on");
-    block.setPreviousStatement(true, null);
-    block.setNextStatement(true, null);
-    block.setColour(230);
-    block.setTooltip("");
-    block.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['light_off'] = {
-  init: function() {
-    let block = this as Block;
-    block.appendDummyInput()
-        .appendField("turn the light off");
-    block.setPreviousStatement(true, null);
-    block.setNextStatement(true, null);
-    block.setColour(230);
-    block.setTooltip("");
-    block.setHelpUrl("");
-  }
-};
 
 function App() {
   return (
