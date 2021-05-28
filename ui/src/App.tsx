@@ -1,65 +1,25 @@
-import { BlocklyEditor } from 'react-blockly';
 import styled from '@emotion/styled';
 
 import TopBar from './TopBar';
-import { defineBlocks } from './blocks';
-
-interface ToolboxCategory {
-  name: string,
-  custom?: CustomToolboxCategory,
-  blocks: ToolboxBlock[],
-}
-
-interface ToolboxBlock {
-  type: string,
-  colour?: string,
-  // TODO: fill in with details from here:
-  // https://github.com/nbudin/react-blockly/blob/v6-stable/README.md
-}
-
-type CustomToolboxCategory = 'VARIABLE' | 'PROCEDURE';
-
-defineBlocks();
-
-const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
-  {
-    name: 'Colors',
-    blocks: [
-      { type: 'start' },
-      { type: 'set_color' },
-      { type: 'light_on' },
-      { type: 'light_off' },
-    ]
-  }
-];
-
-const INITIAL_XML = `
-  <xml xmlns="http://www.w3.org/1999/xhtml"></xml>
-`;
+import Editor from './Editor';
+import { useState } from 'react';
 
 function App() {
+  const [program, setProgram] = useState<string>('');
+
   const handleRun = () => {
     console.log('TODO: handle run');
+    console.log(program);
+  }
+
+  const handleUpdateProgram = (programText: string) => {
+    setProgram(programText);
   }
 
   return (
     <Container>
       <TopBar onRun={handleRun} />
-      <EditorContainer>
-        <BlocklyEditor
-          wrapperDivClassName="fill-height"
-          toolboxCategories={TOOLBOX_CATEGORIES}
-          workspaceConfiguration={{
-            grid: {
-              spacing: 20,
-              length: 3,
-              colour: '#ccc',
-              snap: true,
-            },
-          }}
-          initialXml={INITIAL_XML}
-        />
-      </EditorContainer>
+      <Editor onUpdateProgram={handleUpdateProgram} />
     </Container>
   );
 }
@@ -71,8 +31,4 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const EditorContainer = styled.main`
-  flex-grow: 1;
 `;
