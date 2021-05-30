@@ -62,5 +62,20 @@ export function defineBlocks() {
       block.setHelpUrl("");
     }
   };
+
+  Blockly.Blocks['wait'] = {
+    init: function() {
+      let block = this as Block;
+      block.appendDummyInput()
+          .appendField("wait for")
+          .appendField(new Blockly.FieldNumber(1.5, 0.1, Infinity, 0.01), "TIME")
+          .appendField("seconds");
+      block.setPreviousStatement(true, null);
+      block.setNextStatement(true, null);
+      block.setColour(0);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
 }
 

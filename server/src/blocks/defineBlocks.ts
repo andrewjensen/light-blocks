@@ -2,11 +2,13 @@ import { IBlockHandler } from './IBlockHandler';
 import StartBlock from './StartBlock';
 import LightOnBlock from './LightOnBlock';
 import LightOffBlock from './LightOffBlock';
+import WaitBlock from './WaitBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
   new LightOnBlock(),
-  new LightOffBlock()
+  new LightOffBlock(),
+  new WaitBlock()
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {

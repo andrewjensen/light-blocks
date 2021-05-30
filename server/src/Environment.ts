@@ -1,6 +1,8 @@
 import { v3 as NodeHueApi } from 'node-hue-api';
 import { Api } from 'node-hue-api/dist/esm/api/Api';
 
+import { pause } from './timingUtils';
+
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 
 export default class Environment {
@@ -45,8 +47,4 @@ export default class Environment {
       pause(DEFAULT_TRANSITION_TIME_MS)
     ]);
   }
-}
-
-async function pause(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }

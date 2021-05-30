@@ -52,6 +52,27 @@ export function getBlockType(block: Element): string {
   return type;
 }
 
+export function getFieldValue(block: Element, fieldName: string): string {
+  assertElementIsBlock(block);
+
+  const fieldNode = Array.from(block.childNodes)
+    .find(node => {
+      const element = node as Element;
+      return element.tagName === 'field' && element.getAttribute('name') === fieldName;
+    });
+
+  if (!fieldNode) {
+    throw new Error(`Block has no field with name ${fieldName}`);
+  }
+
+  const fieldChildText = fieldNode.firstChild;
+  if (!fieldChildText) {
+    throw new Error(`Block's ${fieldName} field is missing a value`);
+  }
+
+  return fieldChildText.nodeValue || '';
+}
+
 export function stringifyBlock(block: Element): string {
   assertElementIsBlock(block);
 
