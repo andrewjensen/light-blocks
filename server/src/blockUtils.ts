@@ -31,9 +31,7 @@ export function getNextBlock(block: Element): Element | null {
 }
 
 export function getBlockId(block: Element): string {
-  if (block.tagName !== 'block') {
-    throw new TypeError('element is not a block');
-  }
+  assertElementIsBlock(block);
 
   const id = block.getAttribute('id');
   if (!id) {
@@ -43,10 +41,19 @@ export function getBlockId(block: Element): string {
   return id;
 }
 
-export function stringifyBlock(block: Element): string {
-  if (block.tagName !== 'block') {
-    throw new TypeError('element is not a block');
+export function getBlockType(block: Element): string {
+  assertElementIsBlock(block);
+
+  const type = block.getAttribute('type');
+  if (!type) {
+    throw new Error('element does not have a `type` attribute');
   }
+
+  return type;
+}
+
+export function stringifyBlock(block: Element): string {
+  assertElementIsBlock(block);
 
   const attributes = Array.from(block.attributes)
     .map(attr => `${attr}`)
@@ -58,5 +65,11 @@ export function stringifyBlock(block: Element): string {
     return `<block${attributes}> <!-- children --> </block>`;
   } else {
     return `<block${attributes} />`;
+  }
+}
+
+function assertElementIsBlock(block: Element) {
+  if (block.tagName !== 'block') {
+    throw new TypeError('element is not a block');
   }
 }
