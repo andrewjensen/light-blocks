@@ -2,12 +2,14 @@ import { IBlockHandler } from './IBlockHandler';
 import StartBlock from './StartBlock';
 import LightOnBlock from './LightOnBlock';
 import LightOffBlock from './LightOffBlock';
+import SetColorSimpleBlock from './SetColorSimpleBlock';
 import WaitBlock from './WaitBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
   new LightOnBlock(),
   new LightOffBlock(),
+  new SetColorSimpleBlock(),
   new WaitBlock()
 ];
 

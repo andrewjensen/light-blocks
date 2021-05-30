@@ -47,4 +47,20 @@ export default class Environment {
       pause(DEFAULT_TRANSITION_TIME_MS)
     ]);
   }
+
+  async setColor(hue: number, brightness: number, saturation: number) {
+    const hueScaled = hue * 182.0;
+
+    console.log(`setColor ${hueScaled} ${brightness} ${saturation}`);
+
+    return Promise.all([
+      this.client!.lights.setLightState(this.lightId!, {
+        hue: hueScaled,
+        brightness: brightness,
+        saturation: saturation,
+        transitionInMillis: DEFAULT_TRANSITION_TIME_MS
+      }),
+      pause(DEFAULT_TRANSITION_TIME_MS)
+    ]);
+  }
 }
