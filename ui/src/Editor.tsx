@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import { BlocklyEditor } from 'react-blockly';
 import styled from '@emotion/styled';
@@ -5,6 +6,7 @@ import styled from '@emotion/styled';
 import { defineBlocks } from './blocks';
 
 interface Props {
+  currentBlockId: string | null
   onUpdateProgram: (program: string) => void
 }
 
@@ -50,10 +52,23 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   }
 ];
 
-const Editor: React.FC<Props> = ({ onUpdateProgram }) => {
-  const handleWorkspaceDidChange = (workspace: WorkspaceSvg) => {
-    const dom = Blockly.Xml.workspaceToDom(workspace);
+const Editor: React.FC<Props> = ({ currentBlockId, onUpdateProgram }) => {
+  const [workspace, setWorkspace] = useState<WorkspaceSvg | null>(null);
+
+  useEffect(() => {
+    if (workspace) {
+      const nullableBlock = currentBlockId as string; // Working around Blockly's incorrect type
+      workspace.highlightBlock(nullableBlock);
+    }
+  }, [currentBlockId, workspace]);
+
+  const handleWorkspaceDidChange = (changedWorkspace: WorkspaceSvg) => {
+    const dom = Blockly.Xml.workspaceToDom(changedWorkspace);
     const text = Blockly.Xml.domToPrettyText(dom);
+
+    if (!workspace) {
+      setWorkspace(changedWorkspace);
+    }
 
     onUpdateProgram(text);
   }

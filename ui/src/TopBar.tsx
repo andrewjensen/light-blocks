@@ -1,16 +1,19 @@
 import styled from '@emotion/styled';
 
 interface Props {
+  isRunning: boolean
   onRun: () => void
 }
 
-const TopBar: React.FC<Props> = ({ onRun }) => {
+const TopBar: React.FC<Props> = ({ isRunning, onRun }) => {
   return (
     <Container>
       <Title>light-blocks</Title>
 
       <Controls>
-        <RunButton onClick={onRun}>Run</RunButton>
+        <RunButton onClick={onRun}>
+          {isRunning ? 'Running...' : 'Run'}
+        </RunButton>
       </Controls>
     </Container>
   )
