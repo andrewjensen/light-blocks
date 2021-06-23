@@ -12,7 +12,7 @@ interface Props {
 
 interface ToolboxCategory {
   name: string,
-  custom?: CustomToolboxCategory,
+  custom?: CustomCategoryName,
   blocks: ToolboxBlock[],
 }
 
@@ -23,7 +23,7 @@ interface ToolboxBlock {
   // https://github.com/nbudin/react-blockly/blob/v6-stable/README.md
 }
 
-type CustomToolboxCategory = 'VARIABLE' | 'PROCEDURE';
+type CustomCategoryName = 'VARIABLE' | 'PROCEDURE';
 
 defineBlocks();
 
