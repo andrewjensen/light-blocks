@@ -5,6 +5,7 @@ import LightOffBlock from './LightOffBlock';
 import SetColorSimpleBlock from './SetColorSimpleBlock';
 import WaitBlock from './WaitBlock';
 import NumberBlock from './NumberBlock';
+import RandomBetweenBlock from './RandomBetweenBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
@@ -13,6 +14,7 @@ const TO_DEFINE: IBlockHandler[] = [
   new SetColorSimpleBlock(),
   new WaitBlock(),
   new NumberBlock(),
+  new RandomBetweenBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {

@@ -130,5 +130,28 @@ export function defineBlocks() {
       block.setHelpUrl("");
     }
   };
+
+  Blockly.Blocks['math_random_between'] = {
+    init: function() {
+      let block = this as Block;
+      block.appendDummyInput()
+        .appendField("random number between");
+
+      block.appendValueInput("MIN")
+        .setCheck("Number");
+
+      block.appendDummyInput()
+        .appendField("and");
+
+        block.appendValueInput("MAX")
+        .setCheck("Number");
+
+      block.setColour(230);
+      block.setTooltip("");
+      block.setHelpUrl("");
+      block.setInputsInline(true);
+      block.setOutput(true, "Number");
+    }
+  };
 }
 

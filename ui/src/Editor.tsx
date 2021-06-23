@@ -55,7 +55,8 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
     name: 'Math',
     blocks: [
-      { type: 'math_number' }
+      { type: 'math_number' },
+      { type: 'math_random_between' }
     ]
   }
 ];
