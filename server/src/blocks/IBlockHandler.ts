@@ -1,6 +1,6 @@
-import Environment from '../Environment';
+import Interpreter, { ProgramValue } from '../Interpreter';
 
 export interface IBlockHandler {
   getType: () => string
-  evaluate: (block: Element, environment: Environment) => Promise<void>
+  evaluate: (block: Element, interpreter: Interpreter) => Promise<ProgramValue>
 }

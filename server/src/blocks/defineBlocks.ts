@@ -4,13 +4,15 @@ import LightOnBlock from './LightOnBlock';
 import LightOffBlock from './LightOffBlock';
 import SetColorSimpleBlock from './SetColorSimpleBlock';
 import WaitBlock from './WaitBlock';
+import NumberBlock from './NumberBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
   new LightOnBlock(),
   new LightOffBlock(),
   new SetColorSimpleBlock(),
-  new WaitBlock()
+  new WaitBlock(),
+  new NumberBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {

@@ -73,6 +73,31 @@ export function getFieldValue(block: Element, fieldName: string): string {
   return fieldChildText.nodeValue || '';
 }
 
+export function getNestedValue(block: Element, valueName: string): Element | null {
+  assertElementIsBlock(block);
+
+  const valueNode = Array.from(block.childNodes)
+    .find(node => {
+      const element = node as Element;
+      return element.tagName === 'value' && element.getAttribute('name') === valueName;
+    });
+
+  if (!valueNode) {
+    return null;
+  }
+
+  const nestedBlock = Array.from(valueNode.childNodes)
+    .find(node => {
+      const element = node as Element;
+      return element.tagName === 'block';
+    });
+  if (!nestedBlock) {
+    throw new Error(`Block has a value ${valueName} but no nested block`);
+  }
+
+  return nestedBlock as Element;
+}
+
 export function stringifyBlock(block: Element): string {
   assertElementIsBlock(block);
 

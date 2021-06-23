@@ -1,4 +1,4 @@
-import Environment from '../Environment';
+import Interpreter, { ProgramValue } from '../Interpreter';
 import { IBlockHandler } from './IBlockHandler';
 
 export default class LightOnBlock implements IBlockHandler {
@@ -6,7 +6,9 @@ export default class LightOnBlock implements IBlockHandler {
     return 'light_on';
   }
 
-  async evaluate(block: Element, environment: Environment) {
-    await environment.lightOn();
+  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
+    await interpreter.getEnvironment().lightOn();
+
+    return { type: 'VOID' };
   }
 }

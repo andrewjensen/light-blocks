@@ -10,6 +10,10 @@ import {
 import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
 
+export type ProgramValue =
+  | { type: 'NUMBER', value: number }
+  | { type: 'VOID' };
+
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING' }
   | { type: 'STATUS_STOPPED' }
@@ -49,6 +53,10 @@ export default class Interpreter {
     this.currentBlock = getStartBlock(program);
   }
 
+  getEnvironment(): Environment {
+    return this.environment;
+  }
+
   async run() {
     console.log('run()');
 
@@ -79,11 +87,21 @@ export default class Interpreter {
     }
 
     this.emitEvent({ type: 'CURRENT_BLOCK', id });
-    await handler.evaluate(this.currentBlock, this.environment);
+    await handler.evaluate(this.currentBlock, this);
 
     this.currentBlock = getNextBlock(this.currentBlock);
 
     console.log('');
+  }
+
+  async evaluate(block: Element): Promise<ProgramValue> {
+
+    const type = getBlockType(block);
+    const handler = this.handlers.get(type);
+    if (!handler) {
+      throw new Error(`No handler defined for block type "${type}"`);
+    }
+    return await handler.evaluate(block, this);
   }
 
   private emitEvent(event: InterpreterEvent) {

@@ -19,15 +19,8 @@ export function defineBlocks() {
       let block = this as Block;
       block.appendDummyInput()
           .appendField("set color to");
-      block.appendValueInput("H")
-          .setCheck(null)
-          .appendField("H");
-      block.appendValueInput("S")
-          .setCheck(null)
-          .appendField("S");
-      block.appendValueInput("B")
-          .setCheck(null)
-          .appendField("B");
+      block.appendValueInput("COLOR")
+          .setCheck("Color");
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
@@ -52,6 +45,41 @@ export function defineBlocks() {
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
       block.setColour(230);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['color_simple'] = {
+    init: function() {
+      let block = this as Block;
+      block.appendDummyInput()
+          .appendField("color:")
+          .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
+      block.setOutput(true, "Color");
+      block.setColour(120);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['color_components'] = {
+    init: function() {
+      let block = this as Block;
+      block.appendDummyInput()
+          .appendField("color from components:");
+      block.appendValueInput("HUE")
+          .setCheck("Number")
+          .appendField("H");
+      block.appendValueInput("SATURATION")
+          .setCheck("Number")
+          .appendField("S");
+      block.appendValueInput("BRIGHTNESS")
+          .setCheck("Number")
+          .appendField("B");
+      block.setInputsInline(true);
+      block.setOutput(true, "Color");
+      block.setColour(120);
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -87,9 +115,14 @@ export function defineBlocks() {
     init: function() {
       let block = this as Block;
       block.appendDummyInput()
-          .appendField("wait for")
-          .appendField(new Blockly.FieldNumber(1.5, 0.1, Infinity, 0.01), "TIME")
-          .appendField("seconds");
+        .appendField("wait for");
+
+      block.appendValueInput("TIME")
+        .setCheck("Number");
+
+      block.appendDummyInput()
+        .appendField("seconds");
+
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
       block.setColour(0);

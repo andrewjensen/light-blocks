@@ -1,4 +1,4 @@
-import Environment from '../Environment';
+import Interpreter, { ProgramValue } from '../Interpreter';
 import { IBlockHandler } from './IBlockHandler';
 
 export default class StartBlock implements IBlockHandler {
@@ -6,7 +6,8 @@ export default class StartBlock implements IBlockHandler {
     return 'start';
   }
 
-  async evaluate(block: Element, environment: Environment) {
+  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
     // Do nothing
+    return { type: 'VOID' }
   }
 }
