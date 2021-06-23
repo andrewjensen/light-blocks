@@ -30,26 +30,6 @@ export function defineBlocks() {
     }
   };
 
-  Blockly.Blocks['set_color_simple'] = {
-    init: function() {
-      let block = this as Block;
-      block.appendDummyInput()
-          .appendField("set color to")
-          .appendField("H")
-          .appendField(new Blockly.FieldNumber(0, 0, 359, 1), "HUE")
-          .appendField("S")
-          .appendField(new Blockly.FieldNumber(100, 0, 100, 1), "SATURATION")
-          .appendField("B")
-          .appendField(new Blockly.FieldNumber(100, 0, 100, 1), "BRIGHTNESS");
-      block.setInputsInline(true);
-      block.setPreviousStatement(true, null);
-      block.setNextStatement(true, null);
-      block.setColour(230);
-      block.setTooltip("");
-      block.setHelpUrl("");
-    }
-  };
-
   Blockly.Blocks['color_simple'] = {
     init: function() {
       let block = this as Block;

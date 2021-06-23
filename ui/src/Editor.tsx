@@ -37,13 +37,11 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
     name: 'Colors',
     blocks: [
-      { type: 'start' },
-      { type: 'set_color' },
-      { type: 'set_color_simple' },
-      { type: 'color_simple' },
-      { type: 'color_components' },
       { type: 'light_on' },
       { type: 'light_off' },
+      { type: 'set_color' },
+      { type: 'color_simple' },
+      { type: 'color_components' },
     ]
   },
   {
