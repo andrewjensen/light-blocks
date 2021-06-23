@@ -1,5 +1,5 @@
-import { pause } from '../timingUtils';
-import Interpreter, { ProgramValue } from '../Interpreter';
+import Interpreter from '../Interpreter';
+import { ProgramValue } from '../ProgramValue';
 import { IBlockHandler } from './IBlockHandler';
 import { getFieldValue } from '../blockUtils';
 

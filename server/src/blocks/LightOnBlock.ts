@@ -1,4 +1,5 @@
-import Interpreter, { ProgramValue } from '../Interpreter';
+import Interpreter from '../Interpreter';
+import { ProgramValue } from '../ProgramValue';
 import { IBlockHandler } from './IBlockHandler';
 
 export default class LightOnBlock implements IBlockHandler {

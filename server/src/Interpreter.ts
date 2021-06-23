@@ -1,18 +1,16 @@
 import { DOMParser } from 'xmldom';
 import Environment from './Environment';
+import { ProgramValue } from './ProgramValue';
 import {
   getStartBlock,
   getNextBlock,
   getBlockId,
   getBlockType,
-  stringifyBlock
+  stringifyBlock,
+  getNestedValue
 } from './blockUtils';
 import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
-
-export type ProgramValue =
-  | { type: 'NUMBER', value: number }
-  | { type: 'VOID' };
 
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING' }
@@ -102,6 +100,16 @@ export default class Interpreter {
       throw new Error(`No handler defined for block type "${type}"`);
     }
     return await handler.evaluate(block, this);
+  }
+
+  async evaluateSubExpression(block: Element, valueName: string): Promise<ProgramValue> {
+    const subExpression = getNestedValue(block, valueName);
+    if (!subExpression) {
+      throw new Error(`block is missing expression for value ${valueName}`);
+    }
+
+    const result = await this.evaluate(subExpression);
+    return result;
   }
 
   private emitEvent(event: InterpreterEvent) {
