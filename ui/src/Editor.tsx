@@ -93,6 +93,7 @@ const Editor: React.FC<Props> = ({ currentBlockId, onUpdateProgram }) => {
             colour: '#ccc',
             snap: true,
           },
+          renderer: 'zelos'
         }}
         initialXml={INITIAL_XML}
         workspaceDidChange={handleWorkspaceDidChange}
