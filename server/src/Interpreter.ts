@@ -22,14 +22,14 @@ type EventListener = (event: InterpreterEvent) => void;
 export default class Interpreter {
   private environment: Environment
   private program: Document | null
-  private currentBlock: Element | null
+  private startBlock: Element | null
   private handlers: Map<string, IBlockHandler>
   private eventListener: EventListener
 
   constructor(environment: Environment) {
     this.environment = environment;
     this.program = null;
-    this.currentBlock = null;
+    this.startBlock = null;
     this.handlers = defineBlocks();
     this.eventListener = () => {};
   }
@@ -48,52 +48,67 @@ export default class Interpreter {
       'text/xml'
     );
     this.program = program;
-    this.currentBlock = getStartBlock(program);
+    this.startBlock = getStartBlock(program);
   }
 
   getEnvironment(): Environment {
     return this.environment;
   }
 
+  /**
+   * Run the program, notifying the event listener of state changes.
+   */
   async run() {
     console.log('run()');
 
     this.emitEvent({ type: 'STATUS_RUNNING' });
 
-    while (this.currentBlock) {
-      await this.tick();
+    const mainSequence = this.startBlock;
+    if (!mainSequence) {
+      throw new Error('Program is empty');
     }
+    await this.executeSequence(mainSequence);
 
     this.emitEvent({ type: 'CURRENT_BLOCK', id: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
   }
 
-  async tick() {
-    if (!this.currentBlock) {
-      throw new Error('No current block');
+  /**
+   * Execute a sequence of statement blocks.
+   *
+   * @param firstBlock The first statement block in the sequence
+   */
+  async executeSequence(firstBlock: Element) {
+    let currentBlock: Element | null = firstBlock;
+    while (currentBlock) {
+      await this.execute(currentBlock);
+      currentBlock = getNextBlock(currentBlock);
     }
+  }
 
-    console.log(`Interpreter.tick(): ${stringifyBlock(this.currentBlock)}`);
+  /**
+   * Execute a block while notifying the event listener.
+   *
+   * @param block the block to execute
+   */
+  async execute(block: Element) {
+    console.log(`Interpreter.execute(): ${stringifyBlock(block)}`);
 
-    const id = getBlockId(this.currentBlock);
-    console.log(`  id: ${id}`);
-
-    const type = getBlockType(this.currentBlock);
-    const handler = this.handlers.get(type);
-    if (!handler) {
-      throw new Error(`No handler defined for block type "${type}"`);
-    }
-
+    const id = getBlockId(block);
     this.emitEvent({ type: 'CURRENT_BLOCK', id });
-    await handler.evaluate(this.currentBlock, this);
 
-    this.currentBlock = getNextBlock(this.currentBlock);
+    await this.evaluate(block);
 
     console.log('');
   }
 
+  /**
+   * Evaluate a block's expression with the handler for its type.
+   *
+   * @param block The block to evaluate
+   * @returns The result of evaluating the expression
+   */
   async evaluate(block: Element): Promise<ProgramValue> {
-
     const type = getBlockType(block);
     const handler = this.handlers.get(type);
     if (!handler) {
