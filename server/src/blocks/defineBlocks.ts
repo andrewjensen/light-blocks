@@ -1,34 +1,43 @@
 import { IBlockHandler } from './IBlockHandler';
-import StartBlock from './StartBlock';
-import LightOnBlock from './LightOnBlock';
-import LightOffBlock from './LightOffBlock';
-import WaitBlock from './WaitBlock';
-import NumberBlock from './NumberBlock';
-import RandomBetweenBlock from './RandomBetweenBlock';
-import ColorFromComponentsBlock from './ColorFromComponentsBlock';
-import SetColorBlock from './SetColorBlock';
-import ColorSimpleBlock from './ColorSimpleBlock';
-import LoopForeverBlock from './LoopForeverBlock';
-import LoopNTimesBlock from './LoopNTimesBlock';
-import IfElseBlock from './IfElseBlock';
-import BooleanBlock from './BooleanBlock';
-import CompareBlock from './CompareBlock';
+import StartBlock from './control/StartBlock';
+import LightOnBlock from './colors/LightOnBlock';
+import LightOffBlock from './colors/LightOffBlock';
+import WaitBlock from './timing/WaitBlock';
+import NumberBlock from './math/NumberBlock';
+import RandomBetweenBlock from './math/RandomBetweenBlock';
+import ColorFromComponentsBlock from './colors/ColorFromComponentsBlock';
+import SetColorBlock from './colors/SetColorBlock';
+import ColorSimpleBlock from './colors/ColorSimpleBlock';
+import LoopForeverBlock from './control/LoopForeverBlock';
+import LoopNTimesBlock from './control/LoopNTimesBlock';
+import IfElseBlock from './control/IfElseBlock';
+import BooleanBlock from './logic/BooleanBlock';
+import CompareBlock from './logic/CompareBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
-  new StartBlock(),
-  new LightOnBlock(),
-  new LightOffBlock(),
-  new WaitBlock(),
-  new NumberBlock(),
-  new RandomBetweenBlock(),
-  new SetColorBlock(),
+  // colors
   new ColorFromComponentsBlock(),
   new ColorSimpleBlock(),
+  new LightOffBlock(),
+  new LightOnBlock(),
+  new SetColorBlock(),
+
+  // control
+  new IfElseBlock(),
   new LoopForeverBlock(),
   new LoopNTimesBlock(),
-  new IfElseBlock(),
+  new StartBlock(),
+
+  // logic
   new BooleanBlock(),
   new CompareBlock(),
+
+  // math
+  new NumberBlock(),
+  new RandomBetweenBlock(),
+
+  // timing
+  new WaitBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {

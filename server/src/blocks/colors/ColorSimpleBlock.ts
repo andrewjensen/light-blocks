@@ -1,7 +1,7 @@
-import { getFieldValue } from '../blockUtils';
-import Interpreter from '../Interpreter';
-import { ProgramValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import { getFieldValue } from '../../blockUtils';
+import Interpreter from '../../Interpreter';
+import { ProgramValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 const REGEX_HEX_CODE = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/;
 

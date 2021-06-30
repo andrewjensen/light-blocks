@@ -1,7 +1,7 @@
-import { getNestedStatement } from '../blockUtils';
-import Interpreter from '../Interpreter';
-import { ProgramValue, castNumberValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import { getNestedStatement } from '../../blockUtils';
+import Interpreter from '../../Interpreter';
+import { ProgramValue, castNumberValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class LoopNTimesBlock implements IBlockHandler {
   getType() {

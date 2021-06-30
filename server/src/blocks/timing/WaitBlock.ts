@@ -1,7 +1,7 @@
-import { pause } from '../timingUtils';
-import Interpreter from '../Interpreter';
-import { ProgramValue, castNumberValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import { pause } from '../../timingUtils';
+import Interpreter from '../../Interpreter';
+import { ProgramValue, castNumberValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class WaitBlock implements IBlockHandler {
   getType() {

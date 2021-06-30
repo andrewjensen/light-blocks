@@ -1,7 +1,7 @@
-import { getNestedStatement } from '../blockUtils';
-import Interpreter from '../Interpreter';
-import { ProgramValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import { getNestedStatement } from '../../blockUtils';
+import Interpreter from '../../Interpreter';
+import { ProgramValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class LoopForeverBlock implements IBlockHandler {
   getType() {

@@ -1,7 +1,7 @@
-import Interpreter from '../Interpreter';
-import { castNumberValue, ProgramValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
-import { getFieldValue } from '../blockUtils';
+import Interpreter from '../../Interpreter';
+import { castNumberValue, ProgramValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
+import { getFieldValue } from '../../blockUtils';
 
 type ComparisonOperator =
   | 'EQ'

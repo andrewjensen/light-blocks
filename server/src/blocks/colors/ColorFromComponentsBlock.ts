@@ -1,6 +1,6 @@
-import Interpreter from '../Interpreter';
-import { castNumberValue, ProgramValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import Interpreter from '../../Interpreter';
+import { castNumberValue, ProgramValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class ColorFromComponentsBlock implements IBlockHandler {
   getType() {

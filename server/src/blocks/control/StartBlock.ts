@@ -1,6 +1,6 @@
-import Interpreter from '../Interpreter';
-import { ProgramValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import Interpreter from '../../Interpreter';
+import { ProgramValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class StartBlock implements IBlockHandler {
   getType() {

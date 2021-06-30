@@ -1,6 +1,6 @@
-import Interpreter from '../Interpreter';
-import { ProgramValue, castNumberValue } from '../ProgramValue';
-import { IBlockHandler } from './IBlockHandler';
+import Interpreter from '../../Interpreter';
+import { ProgramValue, castNumberValue } from '../../ProgramValue';
+import { IBlockHandler } from '../IBlockHandler';
 
 export default class RandomBetweenBlock implements IBlockHandler {
   getType() {
