@@ -13,6 +13,9 @@ import LoopNTimesBlock from './control/LoopNTimesBlock';
 import IfElseBlock from './control/IfElseBlock';
 import BooleanBlock from './logic/BooleanBlock';
 import CompareBlock from './logic/CompareBlock';
+import LogicAndBlock from './logic/LogicAndBlock';
+import LogicOrBlock from './logic/LogicOrBlock';
+import LogicNegateBlock from './logic/LogicNegateBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   // colors
@@ -31,6 +34,9 @@ const TO_DEFINE: IBlockHandler[] = [
   // logic
   new BooleanBlock(),
   new CompareBlock(),
+  new LogicAndBlock(),
+  new LogicNegateBlock(),
+  new LogicOrBlock(),
 
   // math
   new NumberBlock(),

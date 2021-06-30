@@ -62,6 +62,9 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
     name: 'Logic',
     blocks: [
       { type: 'logic_boolean' },
+      { type: 'logic_and' },
+      { type: 'logic_or' },
+      { type: 'logic_negate' },
       { type: 'logic_compare' },
     ]
   },

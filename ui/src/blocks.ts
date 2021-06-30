@@ -151,6 +151,48 @@ export function defineBlocks() {
     }
   };
 
+  Blockly.Blocks['logic_and'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendValueInput("A")
+        .setCheck("Boolean");
+
+      block.appendDummyInput()
+        .appendField("and");
+
+      block.appendValueInput("B")
+        .setCheck("Boolean");
+
+      block.setColour(210);
+      block.setTooltip("");
+      block.setHelpUrl("");
+      block.setInputsInline(true);
+      block.setOutput(true, "Boolean");
+    }
+  };
+
+  Blockly.Blocks['logic_or'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendValueInput("A")
+        .setCheck("Boolean");
+
+      block.appendDummyInput()
+        .appendField("or");
+
+        block.appendValueInput("B")
+        .setCheck("Boolean");
+
+      block.setColour(210);
+      block.setTooltip("");
+      block.setHelpUrl("");
+      block.setInputsInline(true);
+      block.setOutput(true, "Boolean");
+    }
+  };
+
   Blockly.Blocks['math_random_between'] = {
     init: function() {
       let block = this as Block;
