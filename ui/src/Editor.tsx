@@ -37,6 +37,8 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
     name: 'Control',
     blocks: [
+      { type: 'logic_boolean' },
+      { type: 'controls_ifelse' },
       { type: 'loop_forever' },
       { type: 'loop_n_times' },
     ]

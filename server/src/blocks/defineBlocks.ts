@@ -10,6 +10,8 @@ import SetColorBlock from './SetColorBlock';
 import ColorSimpleBlock from './ColorSimpleBlock';
 import LoopForeverBlock from './LoopForeverBlock';
 import LoopNTimesBlock from './LoopNTimesBlock';
+import IfElseBlock from './IfElseBlock';
+import BooleanBlock from './BooleanBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
@@ -23,6 +25,8 @@ const TO_DEFINE: IBlockHandler[] = [
   new ColorSimpleBlock(),
   new LoopForeverBlock(),
   new LoopNTimesBlock(),
+  new IfElseBlock(),
+  new BooleanBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {
