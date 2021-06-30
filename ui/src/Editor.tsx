@@ -35,6 +35,13 @@ const INITIAL_XML = `
 
 const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
+    name: 'Control',
+    blocks: [
+      { type: 'loop_forever' },
+      { type: 'loop_n_times' },
+    ]
+  },
+  {
     name: 'Colors',
     blocks: [
       { type: 'light_on' },

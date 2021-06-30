@@ -98,6 +98,31 @@ export function getNestedValue(block: Element, valueName: string): Element | nul
   return nestedBlock as Element;
 }
 
+export function getNestedStatement(block: Element, statementName: string): Element | null {
+  assertElementIsBlock(block);
+
+  const statementNode = Array.from(block.childNodes)
+    .find(node => {
+      const element = node as Element;
+      return element.tagName === 'statement' && element.getAttribute('name') === statementName;
+    });
+
+  if (!statementNode) {
+    return null;
+  }
+
+  const nestedBlock = Array.from(statementNode.childNodes)
+    .find(node => {
+      const element = node as Element;
+      return element.tagName === 'block';
+    });
+  if (!nestedBlock) {
+    throw new Error(`Block has a value ${statementName} but no nested block`);
+  }
+
+  return nestedBlock as Element;
+}
+
 export function stringifyBlock(block: Element): string {
   assertElementIsBlock(block);
 

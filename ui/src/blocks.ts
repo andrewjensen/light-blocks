@@ -14,6 +14,46 @@ export function defineBlocks() {
     }
   };
 
+  Blockly.Blocks['loop_n_times'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendDummyInput()
+          .appendField("loop");
+      block.appendValueInput("REPEAT_TIMES")
+          .setCheck("Number");
+      block.appendDummyInput()
+          .appendField("times do:");
+
+      block.appendStatementInput("LOOP_BODY");
+
+      block.setInputsInline(true);
+      block.setPreviousStatement(true, null);
+      block.setNextStatement(true, null);
+      block.setColour(180);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['loop_forever'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendDummyInput()
+          .appendField("loop forever do:");
+
+      block.appendStatementInput("LOOP_BODY");
+
+      block.setInputsInline(true);
+      block.setPreviousStatement(true, null);
+      block.setNextStatement(true, null);
+      block.setColour(180);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
   Blockly.Blocks['set_color'] = {
     init: function() {
       let block = this as Block;

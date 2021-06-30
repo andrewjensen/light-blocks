@@ -8,6 +8,8 @@ import RandomBetweenBlock from './RandomBetweenBlock';
 import ColorFromComponentsBlock from './ColorFromComponentsBlock';
 import SetColorBlock from './SetColorBlock';
 import ColorSimpleBlock from './ColorSimpleBlock';
+import LoopForeverBlock from './LoopForeverBlock';
+import LoopNTimesBlock from './LoopNTimesBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
@@ -19,6 +21,8 @@ const TO_DEFINE: IBlockHandler[] = [
   new SetColorBlock(),
   new ColorFromComponentsBlock(),
   new ColorSimpleBlock(),
+  new LoopForeverBlock(),
+  new LoopNTimesBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {
