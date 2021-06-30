@@ -12,6 +12,7 @@ import LoopForeverBlock from './LoopForeverBlock';
 import LoopNTimesBlock from './LoopNTimesBlock';
 import IfElseBlock from './IfElseBlock';
 import BooleanBlock from './BooleanBlock';
+import CompareBlock from './CompareBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   new StartBlock(),
@@ -27,6 +28,7 @@ const TO_DEFINE: IBlockHandler[] = [
   new LoopNTimesBlock(),
   new IfElseBlock(),
   new BooleanBlock(),
+  new CompareBlock(),
 ];
 
 export function defineBlocks(): Map<string, IBlockHandler> {

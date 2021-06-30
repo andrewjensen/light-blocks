@@ -35,15 +35,6 @@ const INITIAL_XML = `
 
 const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
   {
-    name: 'Control',
-    blocks: [
-      { type: 'logic_boolean' },
-      { type: 'controls_ifelse' },
-      { type: 'loop_forever' },
-      { type: 'loop_n_times' },
-    ]
-  },
-  {
     name: 'Colors',
     blocks: [
       { type: 'light_on' },
@@ -57,6 +48,21 @@ const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
     name: 'Timing',
     blocks: [
       { type: 'wait' }
+    ]
+  },
+  {
+    name: 'Control',
+    blocks: [
+      { type: 'controls_ifelse' },
+      { type: 'loop_forever' },
+      { type: 'loop_n_times' },
+    ]
+  },
+  {
+    name: 'Logic',
+    blocks: [
+      { type: 'logic_boolean' },
+      { type: 'logic_compare' },
     ]
   },
   {
