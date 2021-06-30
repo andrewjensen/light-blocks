@@ -1,9 +1,15 @@
 import { useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 import styled from '@emotion/styled';
 import { io } from 'socket.io-client';
 
 import TopBar from './TopBar';
-import Editor from './Editor';
+import Home from './Home/Home';
+import Editor from './Editor/Editor';
 import { useState } from 'react';
 
 export type InterpreterEvent =
@@ -50,13 +56,25 @@ function App() {
   }
 
   return (
-    <Container>
-      <TopBar isRunning={isRunning} onRun={handleRun} />
-      <Editor
-        currentBlockId={currentBlockId}
-        onUpdateProgram={handleUpdateProgram}
-      />
-    </Container>
+    <Router>
+      <Container>
+        <TopBar isRunning={isRunning} onRun={handleRun} />
+          <Switch>
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route path="/">
+              <Editor
+                currentBlockId={currentBlockId}
+                onUpdateProgram={handleUpdateProgram}
+              />
+            </Route>
+            <Route path="/programs/:id">
+              {/* https://reactrouter.com/web/example/url-params */}
+            </Route>
+          </Switch>
+      </Container>
+    </Router>
   );
 }
 

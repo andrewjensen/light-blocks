@@ -3,7 +3,7 @@ import Blockly, { WorkspaceSvg } from 'blockly';
 import { BlocklyEditor } from 'react-blockly';
 import styled from '@emotion/styled';
 
-import { defineBlocks } from './blocks';
+import { defineBlocks } from '../blocks';
 
 interface Props {
   currentBlockId: string | null
