@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { useCallback, useEffect, useState } from 'react';
 
 import ViewContainer from '../common/components/ViewContainer';
+import { SERVER_HOST } from '../common/constants';
 import { ProgramList } from './ProgramList';
 
 export interface ProgramMeta {
@@ -8,22 +10,19 @@ export interface ProgramMeta {
   title: string
 }
 
-const MOCK_PROGRAMS: ProgramMeta[] = [
-  {
-    id: 1,
-    title: 'Sunset Vibes'
-  },
-  {
-    id: 2,
-    title: 'Blockrunner 2049'
-  },
-  {
-    id: 3,
-    title: 'My Cool Setup'
-  }
-];
-
 const HomeView: React.FC = () => {
+  const [programs, setPrograms] = useState<ProgramMeta[]>([]);
+
+  const loadPrograms = useCallback(async () => {
+    const response = await fetch(`${SERVER_HOST}/api/programs`);
+    const body = await response.json();
+    setPrograms(body);
+  }, [setPrograms]);
+
+  useEffect(() => {
+    loadPrograms();
+  }, [loadPrograms]);
+
   const handlePlay = (programId: number) => {
     console.log('handlePlay', programId);
   };
@@ -40,7 +39,7 @@ const HomeView: React.FC = () => {
     <ViewContainer>
       <ContentContainer>
         <ProgramList
-          programs={MOCK_PROGRAMS}
+          programs={programs}
           onPlay={handlePlay}
           onEdit={handleEdit}
           onDelete={handleDelete}

@@ -11,13 +11,12 @@ import TopBar from './TopBar';
 import Home from './Home/Home';
 import Editor from './Editor/Editor';
 import { useState } from 'react';
+import { SERVER_HOST } from './common/constants';
 
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING' }
   | { type: 'STATUS_STOPPED' }
   | { type: 'CURRENT_BLOCK', id: string | null };
-
-const SERVER_HOST = 'http://localhost:4000';
 
 function App() {
   const [isRunning, setIsRunning] = useState<boolean>(false);

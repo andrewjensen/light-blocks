@@ -7,6 +7,7 @@ import { text as textBodyParser } from 'body-parser';
 
 import Interpreter, { InterpreterEvent } from './Interpreter';
 import Environment from './Environment';
+import installProgramRoutes from './api/programs';
 
 Dotenv.config();
 
@@ -39,6 +40,8 @@ app.post('/program', (req: express.Request, res: express.Response) => {
 
   res.status(201).send("Received program");
 });
+
+installProgramRoutes(app);
 
 async function run() {
   await environment.initialize();
