@@ -4,16 +4,24 @@ import { ProgramMeta } from './Home';
 
 interface Props {
   program: ProgramMeta
+  onPlay: () => void
+  onEdit: () => void
+  onDelete: () => void
 }
 
-export const ProgramListItem: React.FC<Props> = ({ program }) => {
+export const ProgramListItem: React.FC<Props> = ({
+  program,
+  onPlay,
+  onEdit,
+  onDelete
+}) => {
   return (
     <Container>
       <Title>{program.title}</Title>
       <Controls>
-        <Button>Play</Button>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
+        <Button onClick={onPlay}>Play</Button>
+        <Button onClick={onEdit}>Edit</Button>
+        <Button onClick={onDelete}>Delete</Button>
       </Controls>
     </Container>
   );

@@ -24,10 +24,27 @@ const MOCK_PROGRAMS: ProgramMeta[] = [
 ];
 
 const HomeView: React.FC = () => {
+  const handlePlay = (programId: number) => {
+    console.log('handlePlay', programId);
+  };
+
+  const handleEdit = (programId: number) => {
+    console.log('handleEdit', programId);
+  };
+
+  const handleDelete = (programId: number) => {
+    console.log('handleDelete', programId);
+  };
+
   return (
     <ViewContainer>
       <ContentContainer>
-        <ProgramList programs={MOCK_PROGRAMS} />
+        <ProgramList
+          programs={MOCK_PROGRAMS}
+          onPlay={handlePlay}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </ContentContainer>
     </ViewContainer>
   );

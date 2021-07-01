@@ -5,13 +5,27 @@ import { ProgramListItem } from './ProgramListItem';
 
 interface Props {
   programs: ProgramMeta[]
+  onPlay: (programId: number) => void
+  onEdit: (programId: number) => void
+  onDelete: (programId: number) => void
 }
 
-export const ProgramList: React.FC<Props> = ({ programs }) => {
+export const ProgramList: React.FC<Props> = ({
+  programs,
+  onPlay,
+  onEdit,
+  onDelete
+}) => {
   return (
     <Container>
       {programs.map(program => (
-        <ProgramListItem key={program.id} program={program} />
+        <ProgramListItem
+          key={program.id}
+          program={program}
+          onPlay={() => onPlay(program.id)}
+          onEdit={() => onEdit(program.id)}
+          onDelete={() => onDelete(program.id)}
+        />
       ))}
     </Container>
   )
