@@ -18,6 +18,5 @@ export const ProgramList: React.FC<Props> = ({ programs }) => {
 };
 
 const Container = styled.div`
-  max-width: 50rem;
   margin: 2rem auto;
 `;

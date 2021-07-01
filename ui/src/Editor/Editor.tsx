@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Blockly, { WorkspaceSvg } from 'blockly';
 import { BlocklyEditor } from 'react-blockly';
-import styled from '@emotion/styled';
 
+import ViewContainer from '../common/components/ViewContainer';
 import { defineBlocks } from '../blocks';
 
 interface Props {
@@ -99,7 +99,7 @@ const Editor: React.FC<Props> = ({ currentBlockId, onUpdateProgram }) => {
   }
 
   return (
-    <Container>
+    <ViewContainer>
       <BlocklyEditor
         wrapperDivClassName="fill-height"
         toolboxCategories={TOOLBOX_CATEGORIES}
@@ -115,12 +115,8 @@ const Editor: React.FC<Props> = ({ currentBlockId, onUpdateProgram }) => {
         initialXml={INITIAL_XML}
         workspaceDidChange={handleWorkspaceDidChange}
       />
-    </Container>
+    </ViewContainer>
   );
 }
 
 export default Editor;
-
-const Container = styled.main`
-  flex-grow: 1;
-`;
