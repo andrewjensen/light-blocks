@@ -15,10 +15,15 @@ export async function connectToDB() {
 export class Program extends Model {
   public id!: number
   public title!: string
+  public source!: string
 }
 
 Program.init({
   title: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  source: {
     type: DataTypes.TEXT,
     allowNull: false
   }

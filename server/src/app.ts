@@ -9,6 +9,7 @@ import { connectToDB } from './db';
 import Interpreter, { InterpreterEvent } from './Interpreter';
 import Environment from './Environment';
 import installProgramRoutes from './api/programs';
+import installInterpreterRoutes from './api/interpreter';
 
 Dotenv.config();
 
@@ -43,6 +44,7 @@ app.post('/program', (req: express.Request, res: express.Response) => {
 });
 
 installProgramRoutes(app);
+installInterpreterRoutes(app);
 
 async function run() {
   await connectToDB();

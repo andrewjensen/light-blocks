@@ -34,9 +34,7 @@ export default function installProgramRoutes(app: express.Application) {
 
   router.post('/', async (req: express.Request, res: express.Response) => {
     const title = req.body.title;
-
     const program = await createProgram(title);
-    console.log('program', program);
 
     res.status(200).json(program);
   });
@@ -44,15 +42,15 @@ export default function installProgramRoutes(app: express.Application) {
   router.put('/:id', async (req: express.Request, res: express.Response) => {
     const programId = parseInt(req.params.id);
     const params = req.body;
-
     const updatedProgram = await editProgram(programId, params);
+
     res.status(200).json(updatedProgram);
   });
 
   router.delete('/:id', async (req: express.Request, res: express.Response) => {
     const programId = parseInt(req.params.id);
-
     await deleteProgram(programId);
+
     res.status(200).json({});
   });
 }
