@@ -8,6 +8,7 @@ export interface AppState {
 
 export type AppAction =
   | { type: 'LOADED_PROGRAMS', programs: ProgramMeta[] }
+  | { type: 'PROGRAM_CREATE', program: ProgramMeta }
   | { type: 'PROGRAM_SET_SOURCE', programId: number, source: string }
   | { type: 'PROGRAM_DELETE', programId: number }
   | { type: 'INTERPRETER_RUN_PROGRAM', programId: number }
@@ -26,6 +27,14 @@ export function appReducer(state: AppState = INITIAL_STATE, action: AppAction): 
       return {
         ...state,
         programs: action.programs
+      };
+    case 'PROGRAM_CREATE':
+      return {
+        ...state,
+        programs: [
+          ...state.programs,
+          action.program
+        ]
       };
     case 'PROGRAM_SET_SOURCE':
       return {

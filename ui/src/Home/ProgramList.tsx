@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 
 import { ProgramMeta } from '../common/types';
 import { ProgramListItem } from './ProgramListItem';
+import { CreateProgramButton } from './CreateProgramButton';
 
 interface Props {
   programs: ProgramMeta[]
+  onClickCreate: () => void
   onPlay: (programId: number) => void
   onEdit: (programId: number) => void
   onDelete: (programId: number) => void
@@ -12,6 +14,7 @@ interface Props {
 
 export const ProgramList: React.FC<Props> = ({
   programs,
+  onClickCreate,
   onPlay,
   onEdit,
   onDelete
@@ -27,6 +30,9 @@ export const ProgramList: React.FC<Props> = ({
           onDelete={() => onDelete(program.id)}
         />
       ))}
+      <CreateProgramButton
+        onClick={onClickCreate}
+      />
     </Container>
   )
 };

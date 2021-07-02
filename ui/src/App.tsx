@@ -10,6 +10,7 @@ import { io } from 'socket.io-client';
 import { SERVER_HOST } from './common/constants';
 import { appReducer, INITIAL_STATE } from './appReducer';
 import {
+  createProgram,
   deleteProgram,
   editProgram,
   listPrograms,
@@ -63,6 +64,11 @@ function App() {
   //   console.log('response body:', body);
   // }
 
+  const handleCreate = async (title: string) => {
+    const program = await createProgram(title);
+    dispatch({ type: 'PROGRAM_CREATE', program });
+  }
+
   const handleUpdateSource = async (programId: number, source: string) => {
     console.log('setting source:', source);
     await editProgram(programId, { source });
@@ -96,6 +102,7 @@ function App() {
                 <Home
                   programs={state.programs}
                   onPlay={handlePlay}
+                  onCreate={handleCreate}
                   onDelete={handleDelete}
                 />
               </Route>

@@ -8,14 +8,22 @@ import { ProgramList } from './ProgramList';
 interface Props {
   programs: ProgramMeta[]
   onPlay: (programId: number) => void
+  onCreate: (title: string) => void
   onDelete: (programId: number) => void
 }
 
-const HomeView: React.FC<Props> = ({ programs, onPlay, onDelete }) => {
+const HomeView: React.FC<Props> = ({ programs, onPlay, onCreate, onDelete }) => {
   const history = useHistory();
 
-  const handlePlay = (programId: number) => {
-    onPlay(programId);
+  const handleCreate = () => {
+    const title = window.prompt('Enter a program title:');
+    if (title === null) {
+      // Do nothing
+    } else if (title === '') {
+      window.alert('Missing title!');
+    } else {
+      onCreate(title);
+    }
   };
 
   const handleEdit = (programId: number) => {
@@ -36,7 +44,8 @@ const HomeView: React.FC<Props> = ({ programs, onPlay, onDelete }) => {
       <ContentContainer>
         <ProgramList
           programs={programs}
-          onPlay={handlePlay}
+          onClickCreate={handleCreate}
+          onPlay={onPlay}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
