@@ -88,26 +88,31 @@ function App() {
   return (
     <Router>
       <Container>
-        <TopBar />
-          {state.programs && (
-            <Switch>
-              <Route path="/programs/:programId">
-                <Editor
-                  programs={state.programs}
-                  currentBlockId={state.currentBlockId}
-                  onUpdateSource={handleUpdateSource}
-                />
-              </Route>
-              <Route path="/">
-                <Home
-                  programs={state.programs}
-                  onPlay={handlePlay}
-                  onCreate={handleCreate}
-                  onDelete={handleDelete}
-                />
-              </Route>
-            </Switch>
-          )}
+        {state.programs && (
+          <Switch>
+            <Route path="/programs/:programId">
+              <TopBar
+                programs={state.programs}
+              />
+              <Editor
+                programs={state.programs}
+                currentBlockId={state.currentBlockId}
+                onUpdateSource={handleUpdateSource}
+              />
+            </Route>
+            <Route path="/">
+              <TopBar
+                programs={state.programs}
+              />
+              <Home
+                programs={state.programs}
+                onPlay={handlePlay}
+                onCreate={handleCreate}
+                onDelete={handleDelete}
+              />
+            </Route>
+          </Switch>
+        )}
       </Container>
     </Router>
   );
