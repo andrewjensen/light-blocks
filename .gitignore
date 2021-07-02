@@ -1,4 +1,5 @@
 /server/dist/
+/server/lightblocks.sqlite
 
 node_modules/
 .env

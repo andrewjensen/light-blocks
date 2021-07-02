@@ -1,10 +1,11 @@
 import Dotenv from 'dotenv';
 import express from 'express';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import * as http from 'http';
 import cors from 'cors';
 import { text as textBodyParser } from 'body-parser';
 
+import { connectToDB } from './db';
 import Interpreter, { InterpreterEvent } from './Interpreter';
 import Environment from './Environment';
 import installProgramRoutes from './api/programs';
@@ -44,6 +45,7 @@ app.post('/program', (req: express.Request, res: express.Response) => {
 installProgramRoutes(app);
 
 async function run() {
+  await connectToDB();
   await environment.initialize();
 
   server.listen(port, () => {

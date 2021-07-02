@@ -1,51 +1,58 @@
 import express from 'express';
+import { json as jsonBodyParser } from 'body-parser';
 
-interface ProgramMeta {
-  id: number
-  title: string
-}
-
-const MOCK_PROGRAMS: ProgramMeta[] = [
-  {
-    id: 1,
-    title: 'Sunset Vibes'
-  },
-  {
-    id: 2,
-    title: 'Blockrunner 2049'
-  },
-  {
-    id: 3,
-    title: 'My Cool Setup'
-  }
-];
-
+import {
+  listPrograms,
+  getProgram,
+  createProgram,
+  editProgram,
+  deleteProgram
+} from '../programs';
 
 export default function installProgramRoutes(app: express.Application) {
-  app.get('/api/programs', (req: express.Request, res: express.Response) => {
-    // TODO: list programs
+  const router = express.Router();
+  router.use(jsonBodyParser());
 
-    res.status(200).json(MOCK_PROGRAMS);
+  app.use('/api/programs', router);
+
+  router.get('/', async (req: express.Request, res: express.Response) => {
+    const programs = await listPrograms();
+
+    res.status(200).json(programs);
   });
 
-  app.get('/api/programs/:id', (req: express.Request, res: express.Response) => {
-    // TODO: list program by id
-
+  router.get('/:id', async (req: express.Request, res: express.Response) => {
     const programId = parseInt(req.params.id);
-    const program = MOCK_PROGRAMS.find(program => program.id === programId);
+    const program = await getProgram(programId);
+
+    if (program) {
+      res.status(200).json(program);
+    } else {
+      res.status(404).json({ error: 'not found' });
+    }
+  });
+
+  router.post('/', async (req: express.Request, res: express.Response) => {
+    const title = req.body.title;
+
+    const program = await createProgram(title);
+    console.log('program', program);
 
     res.status(200).json(program);
   });
 
-  app.post('/api/programs', (req: express.Request, res: express.Response) => {
-    // TODO: create program
+  router.put('/:id', async (req: express.Request, res: express.Response) => {
+    const programId = parseInt(req.params.id);
+    const params = req.body;
+
+    const updatedProgram = await editProgram(programId, params);
+    res.status(200).json(updatedProgram);
   });
 
-  app.put('/api/programs/:id', (req: express.Request, res: express.Response) => {
-    // TODO: update program by id
-  });
+  router.delete('/:id', async (req: express.Request, res: express.Response) => {
+    const programId = parseInt(req.params.id);
 
-  app.delete('/api/programs/:id', (req: express.Request, res: express.Response) => {
-    // TODO: delete program by id
+    await deleteProgram(programId);
+    res.status(200).json({});
   });
 }
