@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { ProgramMeta } from './Home';
+import { ProgramMeta } from '../common/types';
 import { ProgramListItem } from './ProgramListItem';
 
 interface Props {

@@ -9,7 +9,7 @@ export default function installInterpreterRoutes(app: express.Application) {
   app.use('/api/interpreter', router);
 
   router.post('/run/:programId', async (req: express.Request, res: express.Response) => {
-    // TODO: run a program
+    // FIXME: run a program
 
     const programId = parseInt(req.params.programId);
     const program = await getProgram(programId);
@@ -18,7 +18,7 @@ export default function installInterpreterRoutes(app: express.Application) {
   });
 
   router.post('/stop', async (req: express.Request, res: express.Response) => {
-    // TODO: stop the program
+    // FIXME: stop the program
 
     res.status(201).json({});
   });

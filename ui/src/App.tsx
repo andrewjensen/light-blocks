@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useReducer } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,21 +7,33 @@ import {
 import styled from '@emotion/styled';
 import { io } from 'socket.io-client';
 
+import { SERVER_HOST } from './common/constants';
+import { appReducer, INITIAL_STATE } from './appReducer';
+import {
+  deleteProgram,
+  editProgram,
+  listPrograms,
+} from './common/programsApi';
 import TopBar from './TopBar';
 import Home from './Home/Home';
 import Editor from './Editor/Editor';
-import { useState } from 'react';
-import { SERVER_HOST } from './common/constants';
 
 export type InterpreterEvent =
-  | { type: 'STATUS_RUNNING' }
+  | { type: 'STATUS_RUNNING', programId: number }
   | { type: 'STATUS_STOPPED' }
-  | { type: 'CURRENT_BLOCK', id: string | null };
+  | { type: 'CURRENT_BLOCK', blockId: string | null };
 
 function App() {
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [currentBlockId, setCurrentBlockId] = useState<string | null>(null);
-  const [program, setProgram] = useState<string>('');
+  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE);
+
+  const loadPrograms = useCallback(async () => {
+    const fetchedPrograms = await listPrograms();
+    dispatch({ type: 'LOADED_PROGRAMS', programs: fetchedPrograms });
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadPrograms();
+  }, [loadPrograms]);
 
   useEffect(() => {
     const socket = io(SERVER_HOST);
@@ -30,48 +42,65 @@ function App() {
       const event = data as InterpreterEvent;
       switch (event.type) {
         case 'STATUS_RUNNING':
-          return setIsRunning(true);
+          return dispatch({ type: 'INTERPRETER_RUN_PROGRAM', programId: event.programId });
         case 'STATUS_STOPPED':
-          return setIsRunning(false);
+          return dispatch({ type: 'INTERPRETER_STOP' });
         case 'CURRENT_BLOCK':
-          return setCurrentBlockId(event.id);
+          return dispatch({ type: 'INTERPRETER_SET_CURRENT_BLOCK', blockId: event.blockId });
         default:
           throw new Error(`Unhandled event type: ${event}`);
       }
     });
   }, []);
 
-  const handleRun = async () => {
-    const response = await fetch(`${SERVER_HOST}/program`, {
-      method: 'POST',
-      body: program
-    });
-    const body = await response.text();
-    console.log('response body:', body);
+  // FIXME: bring running logic back
+  // const handleRun = async () => {
+  //   const response = await fetch(`${SERVER_HOST}/program`, {
+  //     method: 'POST',
+  //     body: source
+  //   });
+  //   const body = await response.text();
+  //   console.log('response body:', body);
+  // }
+
+  const handleUpdateSource = async (programId: number, source: string) => {
+    console.log('setting source:', source);
+    await editProgram(programId, { source });
+    dispatch({ type: 'PROGRAM_SET_SOURCE', programId, source });
   }
 
-  const handleUpdateProgram = (programText: string) => {
-    setProgram(programText);
+  const handleDelete = async (programId: number) => {
+    await deleteProgram(programId);
+    dispatch({ type: 'PROGRAM_DELETE', programId });
+  }
+
+  const handlePlay = (programId: number) => {
+    // FIXME: implement playing
+    console.log('handlePlay', programId);
   }
 
   return (
     <Router>
       <Container>
-        <TopBar isRunning={isRunning} onRun={handleRun} />
-          <Switch>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/">
-              <Editor
-                currentBlockId={currentBlockId}
-                onUpdateProgram={handleUpdateProgram}
-              />
-            </Route>
-            <Route path="/programs/:id">
-              {/* https://reactrouter.com/web/example/url-params */}
-            </Route>
-          </Switch>
+        <TopBar />
+          {state.programs && (
+            <Switch>
+              <Route path="/programs/:programId">
+                <Editor
+                  programs={state.programs}
+                  currentBlockId={state.currentBlockId}
+                  onUpdateSource={handleUpdateSource}
+                />
+              </Route>
+              <Route path="/">
+                <Home
+                  programs={state.programs}
+                  onPlay={handlePlay}
+                  onDelete={handleDelete}
+                />
+              </Route>
+            </Switch>
+          )}
       </Container>
     </Router>
   );

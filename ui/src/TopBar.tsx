@@ -1,20 +1,21 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 interface Props {
-  isRunning: boolean
-  onRun: () => void
 }
 
-const TopBar: React.FC<Props> = ({ isRunning, onRun }) => {
+// FIXME: clean up
+
+const TopBar: React.FC<Props> = () => {
   return (
     <Container>
-      <Title>light-blocks</Title>
+      <Title><TitleLink to="/">light-blocks</TitleLink></Title>
 
-      <Controls>
+      {/* <Controls>
         <RunButton onClick={onRun}>
           {isRunning ? 'Running...' : 'Run'}
         </RunButton>
-      </Controls>
+      </Controls> */}
     </Container>
   )
 }
@@ -36,17 +37,22 @@ const Title = styled.h1`
   flex-grow: 1;
 `;
 
-const Controls = styled.div``;
-
-const RunButton = styled.button`
-  background-color: black;
+const TitleLink = styled(Link)`
   color: white;
-  border: 1px solid white;
-  font-size: 18px;
-  padding: 5px 10px;
-  cursor: pointer;
-
-  &:hover, &:active {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
+  text-decoration: none;
 `;
+
+// const Controls = styled.div``;
+
+// const RunButton = styled.button`
+//   background-color: black;
+//   color: white;
+//   border: 1px solid white;
+//   font-size: 18px;
+//   padding: 5px 10px;
+//   cursor: pointer;
+
+//   &:hover, &:active {
+//     background-color: rgba(255, 255, 255, 0.2);
+//   }
+// `;

@@ -1,38 +1,34 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
+import { ProgramMeta } from '../common/types';
 import ViewContainer from '../common/components/ViewContainer';
-import { SERVER_HOST } from '../common/constants';
 import { ProgramList } from './ProgramList';
 
-export interface ProgramMeta {
-  id: number
-  title: string
+interface Props {
+  programs: ProgramMeta[]
+  onPlay: (programId: number) => void
+  onDelete: (programId: number) => void
 }
 
-const HomeView: React.FC = () => {
-  const [programs, setPrograms] = useState<ProgramMeta[]>([]);
-
-  const loadPrograms = useCallback(async () => {
-    const response = await fetch(`${SERVER_HOST}/api/programs`);
-    const body = await response.json();
-    setPrograms(body);
-  }, [setPrograms]);
-
-  useEffect(() => {
-    loadPrograms();
-  }, [loadPrograms]);
+const HomeView: React.FC<Props> = ({ programs, onPlay, onDelete }) => {
+  const history = useHistory();
 
   const handlePlay = (programId: number) => {
-    console.log('handlePlay', programId);
+    onPlay(programId);
   };
 
   const handleEdit = (programId: number) => {
-    console.log('handleEdit', programId);
+    history.push(`/programs/${programId}`);
   };
 
   const handleDelete = (programId: number) => {
-    console.log('handleDelete', programId);
+    const programToDelete = programs.find(program => program.id === programId);
+    const confirmMessage = `Are you sure you want to delete ${programToDelete?.title}?`;
+
+    if (window.confirm(confirmMessage)) {
+      onDelete(programId);
+    }
   };
 
   return (

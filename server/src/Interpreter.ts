@@ -13,9 +13,9 @@ import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
 
 export type InterpreterEvent =
-  | { type: 'STATUS_RUNNING' }
+  | { type: 'STATUS_RUNNING', programId: number }
   | { type: 'STATUS_STOPPED' }
-  | { type: 'CURRENT_BLOCK', id: string | null };
+  | { type: 'CURRENT_BLOCK', blockId: string | null };
 
 type EventListener = (event: InterpreterEvent) => void;
 
@@ -61,7 +61,8 @@ export default class Interpreter {
   async run() {
     console.log('run()');
 
-    this.emitEvent({ type: 'STATUS_RUNNING' });
+    // FIXME: include programId
+    this.emitEvent({ type: 'STATUS_RUNNING', programId: -1 });
 
     const mainSequence = this.startBlock;
     if (!mainSequence) {
@@ -69,7 +70,7 @@ export default class Interpreter {
     }
     await this.executeSequence(mainSequence);
 
-    this.emitEvent({ type: 'CURRENT_BLOCK', id: null });
+    this.emitEvent({ type: 'CURRENT_BLOCK', blockId: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
   }
 
@@ -94,8 +95,8 @@ export default class Interpreter {
   async execute(block: Element) {
     console.log(`Interpreter.execute(): ${stringifyBlock(block)}`);
 
-    const id = getBlockId(block);
-    this.emitEvent({ type: 'CURRENT_BLOCK', id });
+    const blockId = getBlockId(block);
+    this.emitEvent({ type: 'CURRENT_BLOCK', blockId });
 
     await this.evaluate(block);
 
