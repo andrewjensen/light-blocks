@@ -37,7 +37,7 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
       const nullableBlock = currentBlockId as string; // Working around Blockly's incorrect type
       workspace.highlightBlock(nullableBlock);
     }
-  }, [currentBlockId, workspace]);
+  }, [currentBlockId, programId, runningProgramId, workspace]);
 
   const handleWorkspaceDidChange = (changedWorkspace: WorkspaceSvg) => {
     const dom = Blockly.Xml.workspaceToDom(changedWorkspace);
