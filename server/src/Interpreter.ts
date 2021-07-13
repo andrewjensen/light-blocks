@@ -26,6 +26,7 @@ export default class Interpreter {
   private startBlock: Element | null
   private handlers: Map<string, IBlockHandler>
   private eventListener: EventListener
+  private isRunning: boolean
 
   constructor(environment: Environment) {
     this.environment = environment;
@@ -33,6 +34,7 @@ export default class Interpreter {
     this.startBlock = null;
     this.handlers = defineBlocks();
     this.eventListener = () => {};
+    this.isRunning = false;
   }
 
   setEventListener(listener: EventListener) {
@@ -67,6 +69,7 @@ export default class Interpreter {
       throw new Error('No program initialized');
     }
 
+    this.isRunning = true;
     this.emitEvent({ type: 'STATUS_RUNNING', programId: this.program.id });
 
     const mainSequence = this.startBlock;
@@ -80,7 +83,7 @@ export default class Interpreter {
   }
 
   stop() {
-    // FIXME: implement
+    this.isRunning = false;
   }
 
   /**
@@ -90,7 +93,7 @@ export default class Interpreter {
    */
   async executeSequence(firstBlock: Element) {
     let currentBlock: Element | null = firstBlock;
-    while (currentBlock) {
+    while (currentBlock && this.isRunning) {
       await this.execute(currentBlock);
       currentBlock = getNextBlock(currentBlock);
     }
