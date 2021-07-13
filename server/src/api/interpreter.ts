@@ -16,14 +16,14 @@ export default function installInterpreterRoutes(app: express.Application, inter
       return res.status(404).json({});
     }
 
-    interpeter.setProgram(program.source);
+    interpeter.setProgram(program);
     interpeter.run();
 
     res.status(201).json({});
   });
 
   router.post('/stop', async (req: express.Request, res: express.Response) => {
-    // FIXME: stop the program
+    interpeter.stop();
 
     res.status(201).json({});
   });

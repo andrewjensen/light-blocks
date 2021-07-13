@@ -10,6 +10,7 @@ import { TOOLBOX_CATEGORIES } from './toolbox';
 
 interface Props {
   programs: ProgramMeta[]
+  runningProgramId: number | null
   currentBlockId: string | null
   onUpdateSource: (programId: number, source: string) => void
 }
@@ -20,7 +21,7 @@ interface EditorUrlParams {
 
 defineBlocks();
 
-const Editor: React.FC<Props> = ({ programs, currentBlockId, onUpdateSource }) => {
+const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, onUpdateSource }) => {
   const { programId: rawProgramId } = useParams<EditorUrlParams>();
   if (!rawProgramId) {
     throw new Error('No program ID to load');
@@ -32,7 +33,7 @@ const Editor: React.FC<Props> = ({ programs, currentBlockId, onUpdateSource }) =
   const [previousSource, setPreviousSource] = useState<string>('');
 
   useEffect(() => {
-    if (workspace) {
+    if (workspace && programId === runningProgramId) {
       const nullableBlock = currentBlockId as string; // Working around Blockly's incorrect type
       workspace.highlightBlock(nullableBlock);
     }

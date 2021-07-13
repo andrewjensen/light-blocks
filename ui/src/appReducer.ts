@@ -53,6 +53,21 @@ export function appReducer(state: AppState = INITIAL_STATE, action: AppAction): 
         ...state,
         programs: state.programs.filter(program => program.id !== action.programId)
       };
+    case 'INTERPRETER_RUN_PROGRAM':
+      return {
+        ...state,
+        runningProgramId: action.programId
+      };
+    case 'INTERPRETER_STOP':
+      return {
+        ...state,
+        runningProgramId: null
+      };
+    case 'INTERPRETER_SET_CURRENT_BLOCK':
+      return {
+        ...state,
+        currentBlockId: action.blockId
+      };
     default:
       return state;
   }

@@ -87,11 +87,13 @@ function App() {
             <Route path="/programs/:programId">
               <TopBar
                 programs={state.programs}
+                runningProgramId={state.runningProgramId}
                 onRun={handleRun}
                 onStop={handleStop}
               />
               <Editor
                 programs={state.programs}
+                runningProgramId={state.runningProgramId}
                 currentBlockId={state.currentBlockId}
                 onUpdateSource={handleUpdateSource}
               />
@@ -99,12 +101,15 @@ function App() {
             <Route path="/">
               <TopBar
                 programs={state.programs}
+                runningProgramId={state.runningProgramId}
                 onRun={handleRun}
                 onStop={handleStop}
               />
               <Home
                 programs={state.programs}
+                runningProgramId={state.runningProgramId}
                 onRun={handleRun}
+                onStop={handleStop}
                 onCreate={handleCreate}
                 onDelete={handleDelete}
               />

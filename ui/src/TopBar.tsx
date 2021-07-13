@@ -5,6 +5,7 @@ import { ProgramMeta } from './common/types';
 
 interface Props {
   programs: ProgramMeta[]
+  runningProgramId: number | null
   onRun: (programId: number) => void
   onStop: () => void
 }
@@ -13,7 +14,7 @@ interface EditorUrlParams {
   programId?: string
 }
 
-const TopBar: React.FC<Props> = ({ programs, onRun, onStop }) => {
+const TopBar: React.FC<Props> = ({ programs, runningProgramId, onRun, onStop }) => {
   const { programId: rawProgramId } = useParams<EditorUrlParams>();
 
   let editingProgram: ProgramMeta | null = null;
@@ -22,13 +23,15 @@ const TopBar: React.FC<Props> = ({ programs, onRun, onStop }) => {
     editingProgram = programs.find(program => program.id === programId) || null;
   }
 
-  // FIXME: figure out running state
-  const isRunning = false;
+  const isRunning =
+    !!editingProgram &&
+    runningProgramId === editingProgram.id;
 
   const handleToggleRun = () => {
-    // FIXME: check whether this program is currently running
-    if (editingProgram) {
+    if (editingProgram && !isRunning) {
       onRun(editingProgram.id);
+    } else if (isRunning) {
+      onStop();
     }
   };
 

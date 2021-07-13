@@ -11,6 +11,7 @@ import {
 } from './blockUtils';
 import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
+import { ProgramMeta } from './types';
 
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING', programId: number }
@@ -21,7 +22,7 @@ type EventListener = (event: InterpreterEvent) => void;
 
 export default class Interpreter {
   private environment: Environment
-  private program: Document | null
+  private program: ProgramMeta | null
   private startBlock: Element | null
   private handlers: Map<string, IBlockHandler>
   private eventListener: EventListener
@@ -38,17 +39,18 @@ export default class Interpreter {
     this.eventListener = listener;
   }
 
-  setProgram(programText: string) {
+  setProgram(inProgram: ProgramMeta) {
     console.log('setting program:');
-    console.log(programText);
+    console.log(inProgram.source);
     console.log('');
 
-    const program = new DOMParser().parseFromString(
-      programText,
+    this.program = inProgram;
+
+    const programXml = new DOMParser().parseFromString(
+      inProgram.source,
       'text/xml'
     );
-    this.program = program;
-    this.startBlock = getStartBlock(program);
+    this.startBlock = getStartBlock(programXml);
   }
 
   getEnvironment(): Environment {
@@ -61,8 +63,11 @@ export default class Interpreter {
   async run() {
     console.log('run()');
 
-    // FIXME: include programId
-    this.emitEvent({ type: 'STATUS_RUNNING', programId: -1 });
+    if (!this.program) {
+      throw new Error('No program initialized');
+    }
+
+    this.emitEvent({ type: 'STATUS_RUNNING', programId: this.program.id });
 
     const mainSequence = this.startBlock;
     if (!mainSequence) {
@@ -72,6 +77,10 @@ export default class Interpreter {
 
     this.emitEvent({ type: 'CURRENT_BLOCK', blockId: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
+  }
+
+  stop() {
+    // FIXME: implement
   }
 
   /**
