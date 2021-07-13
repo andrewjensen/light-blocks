@@ -4,14 +4,14 @@ import { ProgramMeta } from '../common/types';
 
 interface Props {
   program: ProgramMeta
-  onPlay: () => void
+  onRun: () => void
   onEdit: () => void
   onDelete: () => void
 }
 
 export const ProgramListItem: React.FC<Props> = ({
   program,
-  onPlay,
+  onRun,
   onEdit,
   onDelete
 }) => {
@@ -19,7 +19,7 @@ export const ProgramListItem: React.FC<Props> = ({
     <Container>
       <Title>{program.title}</Title>
       <Controls>
-        <Button onClick={onPlay}>Play</Button>
+        <Button onClick={onRun}>Run</Button>
         <Button onClick={onEdit}>Edit</Button>
         <Button onClick={onDelete}>Delete</Button>
       </Controls>

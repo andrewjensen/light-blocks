@@ -44,7 +44,7 @@ app.post('/program', (req: express.Request, res: express.Response) => {
 });
 
 installProgramRoutes(app);
-installInterpreterRoutes(app);
+installInterpreterRoutes(app, interpreter);
 
 async function run() {
   await connectToDB();

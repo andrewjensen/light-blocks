@@ -7,7 +7,7 @@ import { CreateProgramButton } from './CreateProgramButton';
 interface Props {
   programs: ProgramMeta[]
   onClickCreate: () => void
-  onPlay: (programId: number) => void
+  onRun: (programId: number) => void
   onEdit: (programId: number) => void
   onDelete: (programId: number) => void
 }
@@ -15,7 +15,7 @@ interface Props {
 export const ProgramList: React.FC<Props> = ({
   programs,
   onClickCreate,
-  onPlay,
+  onRun,
   onEdit,
   onDelete
 }) => {
@@ -25,7 +25,7 @@ export const ProgramList: React.FC<Props> = ({
         <ProgramListItem
           key={program.id}
           program={program}
-          onPlay={() => onPlay(program.id)}
+          onRun={() => onRun(program.id)}
           onEdit={() => onEdit(program.id)}
           onDelete={() => onDelete(program.id)}
         />

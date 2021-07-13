@@ -27,7 +27,7 @@ const DEFAULT_PROGRAM_SOURCE = `
       </next>
     </block>
   </xml>
-`;
+`.trim();
 
 export async function listPrograms(): Promise<ProgramMeta[]> {
   const programs = await Program.findAll();

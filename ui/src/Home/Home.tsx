@@ -7,12 +7,12 @@ import { ProgramList } from './ProgramList';
 
 interface Props {
   programs: ProgramMeta[]
-  onPlay: (programId: number) => void
+  onRun: (programId: number) => void
   onCreate: (title: string) => void
   onDelete: (programId: number) => void
 }
 
-const HomeView: React.FC<Props> = ({ programs, onPlay, onCreate, onDelete }) => {
+const HomeView: React.FC<Props> = ({ programs, onRun, onCreate, onDelete }) => {
   const history = useHistory();
 
   const handleCreate = () => {
@@ -45,7 +45,7 @@ const HomeView: React.FC<Props> = ({ programs, onPlay, onCreate, onDelete }) => 
         <ProgramList
           programs={programs}
           onClickCreate={handleCreate}
-          onPlay={onPlay}
+          onRun={onRun}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />

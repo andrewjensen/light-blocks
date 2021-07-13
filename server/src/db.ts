@@ -2,7 +2,8 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'lightblocks.sqlite'
+  storage: 'lightblocks.sqlite',
+  logging: false
 });
 
 export async function connectToDB() {

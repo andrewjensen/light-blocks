@@ -18,6 +18,7 @@ import {
 import TopBar from './TopBar';
 import Home from './Home/Home';
 import Editor from './Editor/Editor';
+import { runProgram, stop } from './common/interpreterApi';
 
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING', programId: number }
@@ -54,15 +55,13 @@ function App() {
     });
   }, []);
 
-  // FIXME: bring running logic back
-  // const handleRun = async () => {
-  //   const response = await fetch(`${SERVER_HOST}/program`, {
-  //     method: 'POST',
-  //     body: source
-  //   });
-  //   const body = await response.text();
-  //   console.log('response body:', body);
-  // }
+  const handleRun = async (programId: number) => {
+    await runProgram(programId);
+  }
+
+  const handleStop = async () => {
+    await stop();
+  }
 
   const handleCreate = async (title: string) => {
     const program = await createProgram(title);
@@ -80,11 +79,6 @@ function App() {
     dispatch({ type: 'PROGRAM_DELETE', programId });
   }
 
-  const handlePlay = (programId: number) => {
-    // FIXME: implement playing
-    console.log('handlePlay', programId);
-  }
-
   return (
     <Router>
       <Container>
@@ -93,6 +87,8 @@ function App() {
             <Route path="/programs/:programId">
               <TopBar
                 programs={state.programs}
+                onRun={handleRun}
+                onStop={handleStop}
               />
               <Editor
                 programs={state.programs}
@@ -103,10 +99,12 @@ function App() {
             <Route path="/">
               <TopBar
                 programs={state.programs}
+                onRun={handleRun}
+                onStop={handleStop}
               />
               <Home
                 programs={state.programs}
-                onPlay={handlePlay}
+                onRun={handleRun}
                 onCreate={handleCreate}
                 onDelete={handleDelete}
               />
