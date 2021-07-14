@@ -10,10 +10,12 @@ const GROUP_NAME = 'light-blocks-v1';
 export default class Environment {
   private client: Api | null
   private group: model.Group | null
+  private reachableLightIds: number[]
 
   constructor() {
     this.client = null;
     this.group = null;
+    this.reachableLightIds = [];
   }
 
   async initialize() {
@@ -29,27 +31,22 @@ export default class Environment {
         .connect(username);
 
     this.group = await this.getOrCreateLightGroup();
+
+    const lights = await this.client.lights.getAll();
+
+    this.reachableLightIds = lights
+      .filter(light => {
+        // @ts-ignore
+        const isReachable: boolean = light.state.reachable;
+        return isReachable;
+      })
+      .map(light => light.id as number);
+
+    console.log(`  Reachable light IDs: ${this.reachableLightIds.join(', ')}`);
   }
 
-  async getOrCreateLightGroup(): Promise<model.Group | null> {
-    const possibleGroups = await this.client!.groups.getGroupByName(GROUP_NAME);
-    const foundGroup = possibleGroups.find(group => group.name === GROUP_NAME);
-
-    if (foundGroup) {
-      console.log('  Found existing light group to use');
-      return foundGroup;
-    } else {
-      const lights = await this.client!.lights.getAll();
-
-      const groupSettings = NodeHueApi.model.createLightGroup();
-      groupSettings.name = GROUP_NAME;
-      groupSettings.lights = lights.map(light => `${light.id}`);
-
-      const createdGroup = await this.client!.groups.createGroup(groupSettings);
-      console.log('  Created new light group to use');
-
-      return createdGroup;
-    }
+  getReachableLightIds(): number[] {
+    return this.reachableLightIds;
   }
 
   async lightOn(lightId: number | null): Promise<unknown> {
@@ -125,6 +122,27 @@ export default class Environment {
         this.client!.groups.setGroupState(this.group!, newState),
         pause(DEFAULT_TRANSITION_TIME_MS)
       ]);
+    }
+  }
+
+  private async getOrCreateLightGroup(): Promise<model.Group | null> {
+    const possibleGroups = await this.client!.groups.getGroupByName(GROUP_NAME);
+    const foundGroup = possibleGroups.find(group => group.name === GROUP_NAME);
+
+    if (foundGroup) {
+      console.log('  Found existing light group to use');
+      return foundGroup;
+    } else {
+      const lights = await this.client!.lights.getAll();
+
+      const groupSettings = NodeHueApi.model.createLightGroup();
+      groupSettings.name = GROUP_NAME;
+      groupSettings.lights = lights.map(light => `${light.id}`);
+
+      const createdGroup = await this.client!.groups.createGroup(groupSettings);
+      console.log('  Created new light group to use');
+
+      return createdGroup;
     }
   }
 }

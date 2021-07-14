@@ -17,6 +17,7 @@ import LogicAndBlock from './logic/LogicAndBlock';
 import LogicOrBlock from './logic/LogicOrBlock';
 import LogicNegateBlock from './logic/LogicNegateBlock';
 import RunDistinctProcessesBlock from './control/RunDistinctProcessesBlock';
+import RunDuplicateProcessesBlock from './control/RunDuplicateProcessesBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   // colors
@@ -31,6 +32,7 @@ const TO_DEFINE: IBlockHandler[] = [
   new LoopForeverBlock(),
   new LoopNTimesBlock(),
   new RunDistinctProcessesBlock(),
+  new RunDuplicateProcessesBlock(),
   new StartBlock(),
 
   // logic

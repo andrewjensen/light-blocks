@@ -36,6 +36,7 @@ export const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
       { type: 'controls_ifelse' },
       { type: 'loop_forever' },
       { type: 'loop_n_times' },
+      { type: 'run_duplicate_processes'},
       { type: 'run_distinct_processes'},
     ]
   },

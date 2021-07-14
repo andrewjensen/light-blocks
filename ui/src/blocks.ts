@@ -78,6 +78,24 @@ export function defineBlocks() {
     }
   };
 
+  Blockly.Blocks['run_duplicate_processes'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendDummyInput()
+          .appendField("run the same logic independently for each light");
+      block.appendStatementInput("PROCESS")
+          .appendField("do:");
+
+      block.setInputsInline(true);
+      block.setPreviousStatement(true, null);
+      block.setNextStatement(true, null);
+      block.setColour(30);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
   Blockly.Blocks['set_color'] = {
     init: function() {
       let block = this as Block;
