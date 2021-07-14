@@ -16,6 +16,7 @@ import CompareBlock from './logic/CompareBlock';
 import LogicAndBlock from './logic/LogicAndBlock';
 import LogicOrBlock from './logic/LogicOrBlock';
 import LogicNegateBlock from './logic/LogicNegateBlock';
+import RunDistinctProcessesBlock from './control/RunDistinctProcessesBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   // colors
@@ -29,6 +30,7 @@ const TO_DEFINE: IBlockHandler[] = [
   new IfElseBlock(),
   new LoopForeverBlock(),
   new LoopNTimesBlock(),
+  new RunDistinctProcessesBlock(),
   new StartBlock(),
 
   // logic

@@ -52,45 +52,79 @@ export default class Environment {
     }
   }
 
-  async lightOn() {
-    // TODO: check which use case we are in
+  async lightOn(lightId: number | null): Promise<unknown> {
+    if (lightId) {
+      const newState = new model.LightState()
+        .on()
+        .transition(DEFAULT_TRANSITION_TIME_MS);
 
-    const newState = new model.GroupState()
-      .on()
-      .transition(DEFAULT_TRANSITION_TIME_MS);
+      return Promise.all([
+        this.client!.lights.setLightState(lightId, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    } else {
+      const newState = new model.GroupState()
+        .on()
+        .transition(DEFAULT_TRANSITION_TIME_MS);
 
-    return Promise.all([
-      this.client!.groups.setGroupState(this.group!, newState),
-      pause(DEFAULT_TRANSITION_TIME_MS)
-    ]);
+      return Promise.all([
+        this.client!.groups.setGroupState(this.group!, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    }
   }
 
-  async lightOff() {
-    const newState = new model.GroupState()
-      .off()
-      .transition(DEFAULT_TRANSITION_TIME_MS);
+  async lightOff(lightId: number | null): Promise<unknown> {
+    if (lightId) {
+      const newState = new model.LightState()
+        .off()
+        .transition(DEFAULT_TRANSITION_TIME_MS);
 
-    return Promise.all([
-      this.client!.groups.setGroupState(this.group!, newState),
-      pause(DEFAULT_TRANSITION_TIME_MS)
-    ]);
+      return Promise.all([
+        this.client!.lights.setLightState(lightId, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    } else {
+      const newState = new model.GroupState()
+        .off()
+        .transition(DEFAULT_TRANSITION_TIME_MS);
+
+      return Promise.all([
+        this.client!.groups.setGroupState(this.group!, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    }
   }
 
-  async setColor(hue: number, saturation: number, brightness: number) {
+  async setColor(lightId: number | null, hue: number, saturation: number, brightness: number) {
     const hueScaled = hue * 182.0;
 
     console.log(`setColor ${hueScaled} ${saturation} ${brightness}`);
 
-    const newState = new model.GroupState()
-      .on()
-      .hue(hueScaled)
-      .saturation(saturation)
-      .brightness(brightness)
-      .transition(DEFAULT_TRANSITION_TIME_MS);
+    if (lightId) {
+      const newState = new model.LightState()
+        .on()
+        .hue(hueScaled)
+        .saturation(saturation)
+        .brightness(brightness)
+        .transition(DEFAULT_TRANSITION_TIME_MS);
 
-    return Promise.all([
-      this.client!.groups.setGroupState(this.group!, newState),
-      pause(DEFAULT_TRANSITION_TIME_MS)
-    ]);
+      return Promise.all([
+        this.client!.lights.setLightState(lightId, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    } else {
+      const newState = new model.GroupState()
+        .on()
+        .hue(hueScaled)
+        .saturation(saturation)
+        .brightness(brightness)
+        .transition(DEFAULT_TRANSITION_TIME_MS);
+
+      return Promise.all([
+        this.client!.groups.setGroupState(this.group!, newState),
+        pause(DEFAULT_TRANSITION_TIME_MS)
+      ]);
+    }
   }
 }

@@ -54,6 +54,30 @@ export function defineBlocks() {
     }
   };
 
+  Blockly.Blocks['run_distinct_processes'] = {
+    init: function() {
+      let block = this as Block;
+
+      block.appendDummyInput()
+          .appendField("run logic for each light");
+      block.appendStatementInput("PROCESS1")
+          .appendField("light 1:");
+      block.appendStatementInput("PROCESS2")
+          .appendField("light 2:");
+      block.appendStatementInput("PROCESS3")
+          .appendField("light 3:");
+      block.appendStatementInput("PROCESS4")
+          .appendField("light 4:");
+
+      block.setInputsInline(true);
+      block.setPreviousStatement(true, null);
+      block.setNextStatement(true, null);
+      block.setColour(30);
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
   Blockly.Blocks['set_color'] = {
     init: function() {
       let block = this as Block;

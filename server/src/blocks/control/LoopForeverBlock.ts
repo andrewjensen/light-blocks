@@ -1,5 +1,5 @@
 import { getNestedStatement } from '../../blockUtils';
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { ProgramValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 
@@ -8,7 +8,7 @@ export default class LoopForeverBlock implements IBlockHandler {
     return 'loop_forever';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
 
     const firstBlock = getNestedStatement(block, 'LOOP_BODY');
     if (!firstBlock) {
@@ -16,7 +16,7 @@ export default class LoopForeverBlock implements IBlockHandler {
     }
 
     while (true) {
-      await interpreter.executeSequence(firstBlock);
+      await interpreter.executeSequence(firstBlock, context);
     }
 
     return { type: 'VOID' };

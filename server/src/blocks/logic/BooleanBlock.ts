@@ -1,4 +1,4 @@
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { ProgramValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 import { getFieldValue } from '../../blockUtils';
@@ -8,7 +8,7 @@ export default class BooleanBlock implements IBlockHandler {
     return 'logic_boolean';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
     const value = getFieldValue(block, 'BOOL');
     switch (value) {
       case 'TRUE':

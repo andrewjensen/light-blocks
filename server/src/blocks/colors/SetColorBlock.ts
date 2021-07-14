@@ -1,4 +1,4 @@
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { castColorValue, ProgramValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 
@@ -7,11 +7,11 @@ export default class SetColorBlock implements IBlockHandler {
     return 'set_color';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
-    let colorResult = await interpreter.evaluateSubExpression(block, 'COLOR');
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
+    let colorResult = await interpreter.evaluateSubExpression(block, 'COLOR', context);
     let { hue, saturation, brightness } = castColorValue(colorResult);
 
-    await interpreter.getEnvironment().setColor(hue, saturation, brightness);
+    await interpreter.getEnvironment().setColor(context.lightId, hue, saturation, brightness);
 
     return { type: 'VOID' };
   }

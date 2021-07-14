@@ -1,5 +1,5 @@
 import { getNestedStatement } from '../../blockUtils';
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { ProgramValue, castNumberValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 
@@ -8,8 +8,8 @@ export default class LoopNTimesBlock implements IBlockHandler {
     return 'loop_n_times';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
-    const repeatTimesResult = await interpreter.evaluateSubExpression(block, 'REPEAT_TIMES');
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
+    const repeatTimesResult = await interpreter.evaluateSubExpression(block, 'REPEAT_TIMES', context);
     const repeatTimes = Math.floor(castNumberValue(repeatTimesResult));
 
     const firstBlock = getNestedStatement(block, 'LOOP_BODY');
@@ -18,7 +18,7 @@ export default class LoopNTimesBlock implements IBlockHandler {
     }
 
     for (let i = 0; i < repeatTimes; i++) {
-      await interpreter.executeSequence(firstBlock);
+      await interpreter.executeSequence(firstBlock, context);
     }
 
     return { type: 'VOID' };

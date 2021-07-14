@@ -1,4 +1,4 @@
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { castNumberValue, ProgramValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 import { getFieldValue } from '../../blockUtils';
@@ -25,13 +25,13 @@ export default class CompareBlock implements IBlockHandler {
     return 'logic_compare';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
     const operator = castComparisonOperator(getFieldValue(block, 'OP'));
 
-    const left = await interpreter.evaluateSubExpression(block, 'A');
+    const left = await interpreter.evaluateSubExpression(block, 'A', context);
     const leftResult = castNumberValue(left);
 
-    const right = await interpreter.evaluateSubExpression(block, 'B');
+    const right = await interpreter.evaluateSubExpression(block, 'B', context);
     const rightResult = castNumberValue(right);
 
     const comparisonResult = compare(leftResult, rightResult, operator)

@@ -1,5 +1,5 @@
 import { getFieldValue } from '../../blockUtils';
-import Interpreter from '../../Interpreter';
+import Interpreter, { ExecutionContext } from '../../Interpreter';
 import { ProgramValue } from '../../ProgramValue';
 import { IBlockHandler } from '../IBlockHandler';
 
@@ -10,7 +10,7 @@ export default class ColorSimpleBlock implements IBlockHandler {
     return 'color_simple';
   }
 
-  async evaluate(block: Element, interpreter: Interpreter): Promise<ProgramValue> {
+  async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
     const hexCode = getFieldValue(block, 'COLOR');
 
     const match = hexCode.match(REGEX_HEX_CODE);

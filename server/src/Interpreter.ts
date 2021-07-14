@@ -13,6 +13,10 @@ import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
 import { ProgramMeta } from './types';
 
+export interface ExecutionContext {
+  lightId: number | null
+}
+
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING', programId: number }
   | { type: 'STATUS_STOPPED' }
@@ -76,7 +80,10 @@ export default class Interpreter {
     if (!mainSequence) {
       throw new Error('Program is empty');
     }
-    await this.executeSequence(mainSequence);
+    const initialContext: ExecutionContext = {
+      lightId: null
+    };
+    await this.executeSequence(mainSequence, initialContext);
 
     this.emitEvent({ type: 'CURRENT_BLOCK', blockId: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
@@ -90,11 +97,12 @@ export default class Interpreter {
    * Execute a sequence of statement blocks.
    *
    * @param firstBlock The first statement block in the sequence
+   * @param context The execution context to run the sequence within
    */
-  async executeSequence(firstBlock: Element) {
+  async executeSequence(firstBlock: Element, context: ExecutionContext) {
     let currentBlock: Element | null = firstBlock;
     while (currentBlock && this.isRunning) {
-      await this.execute(currentBlock);
+      await this.execute(currentBlock, context);
       currentBlock = getNextBlock(currentBlock);
     }
   }
@@ -103,14 +111,18 @@ export default class Interpreter {
    * Execute a block while notifying the event listener.
    *
    * @param block the block to execute
+   * @param context The execution context to run the sequence within
    */
-  async execute(block: Element) {
+  async execute(block: Element, context: ExecutionContext) {
     console.log(`Interpreter.execute(): ${stringifyBlock(block)}`);
 
     const blockId = getBlockId(block);
-    this.emitEvent({ type: 'CURRENT_BLOCK', blockId });
 
-    await this.evaluate(block);
+    if (!context.lightId) {
+      this.emitEvent({ type: 'CURRENT_BLOCK', blockId });
+    }
+
+    await this.evaluate(block, context);
 
     console.log('');
   }
@@ -119,24 +131,25 @@ export default class Interpreter {
    * Evaluate a block's expression with the handler for its type.
    *
    * @param block The block to evaluate
+   * @param context The execution context to run within
    * @returns The result of evaluating the expression
    */
-  async evaluate(block: Element): Promise<ProgramValue> {
+  async evaluate(block: Element, context: ExecutionContext): Promise<ProgramValue> {
     const type = getBlockType(block);
     const handler = this.handlers.get(type);
     if (!handler) {
       throw new Error(`No handler defined for block type "${type}"`);
     }
-    return await handler.evaluate(block, this);
+    return await handler.evaluate(block, this, context);
   }
 
-  async evaluateSubExpression(block: Element, valueName: string): Promise<ProgramValue> {
+  async evaluateSubExpression(block: Element, valueName: string, context: ExecutionContext): Promise<ProgramValue> {
     const subExpression = getNestedValue(block, valueName);
     if (!subExpression) {
       throw new Error(`block is missing expression for value ${valueName}`);
     }
 
-    const result = await this.evaluate(subExpression);
+    const result = await this.evaluate(subExpression, context);
     return result;
   }
 
