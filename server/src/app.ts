@@ -2,6 +2,7 @@ import Dotenv from 'dotenv';
 import express from 'express';
 import { Server } from 'socket.io';
 import * as http from 'http';
+import path from 'path';
 import cors from 'cors';
 import { text as textBodyParser } from 'body-parser';
 
@@ -13,6 +14,8 @@ import installInterpreterRoutes from './api/interpreter';
 
 Dotenv.config();
 
+const DIR_STATIC = path.resolve(__dirname, '../../ui/build/');
+
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const io = new Server(server, {
@@ -22,18 +25,18 @@ const io = new Server(server, {
   }
 });
 const port = 4000;
-const environment = new Environment();
-
-const interpreter = new Interpreter(environment);
-interpreter.setEventListener((event: InterpreterEvent) => {
-  io.emit('message', event);
-});
 
 app.use(cors());
 app.use(textBodyParser());
 
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.status(200).send("Hello world");
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(DIR_STATIC));
+}
+
+const environment = new Environment();
+const interpreter = new Interpreter(environment);
+interpreter.setEventListener((event: InterpreterEvent) => {
+  io.emit('message', event);
 });
 
 app.post('/program', (req: express.Request, res: express.Response) => {
