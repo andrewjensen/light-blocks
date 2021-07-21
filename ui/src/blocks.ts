@@ -8,9 +8,9 @@ export function defineBlocks() {
       block.appendDummyInput()
           .appendField("when the program starts, do:");
       block.setNextStatement(true, null);
-      block.setColour(230);
       block.setTooltip("");
       block.setHelpUrl("");
+      block.setStyle("event_blocks");
     }
   };
 
@@ -30,7 +30,7 @@ export function defineBlocks() {
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(180);
+      block.setStyle("control_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -48,7 +48,7 @@ export function defineBlocks() {
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(180);
+      block.setStyle("control_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -72,7 +72,7 @@ export function defineBlocks() {
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(30);
+      block.setStyle("process_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -90,7 +90,7 @@ export function defineBlocks() {
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(30);
+      block.setStyle("process_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -106,7 +106,7 @@ export function defineBlocks() {
       block.setInputsInline(true);
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(230);
+      block.setStyle("color_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -119,7 +119,7 @@ export function defineBlocks() {
           .appendField("color:")
           .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
       block.setOutput(true, "Color");
-      block.setColour(120);
+      block.setStyle("color_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -141,7 +141,7 @@ export function defineBlocks() {
           .appendField("B");
       block.setInputsInline(true);
       block.setOutput(true, "Color");
-      block.setColour(120);
+      block.setStyle("color_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -154,7 +154,7 @@ export function defineBlocks() {
           .appendField("turn the light on");
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(230);
+      block.setStyle("color_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -167,7 +167,7 @@ export function defineBlocks() {
           .appendField("turn the light off");
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(230);
+      block.setStyle("color_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -187,7 +187,7 @@ export function defineBlocks() {
 
       block.setPreviousStatement(true, null);
       block.setNextStatement(true, null);
-      block.setColour(0);
+      block.setStyle("timing_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
     }
@@ -206,7 +206,7 @@ export function defineBlocks() {
       block.appendValueInput("B")
         .setCheck("Boolean");
 
-      block.setColour(210);
+      block.setStyle("logic_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
       block.setInputsInline(true);
@@ -227,7 +227,7 @@ export function defineBlocks() {
         block.appendValueInput("B")
         .setCheck("Boolean");
 
-      block.setColour(210);
+      block.setStyle("logic_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
       block.setInputsInline(true);
@@ -250,7 +250,7 @@ export function defineBlocks() {
         block.appendValueInput("MAX")
         .setCheck("Number");
 
-      block.setColour(230);
+      block.setStyle("math_blocks");
       block.setTooltip("");
       block.setHelpUrl("");
       block.setInputsInline(true);

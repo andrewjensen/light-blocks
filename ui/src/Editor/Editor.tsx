@@ -7,6 +7,7 @@ import ViewContainer from '../common/components/ViewContainer';
 import { defineBlocks } from '../blocks';
 import { ProgramMeta } from '../common/types';
 import { TOOLBOX_CATEGORIES } from './toolbox';
+import LightBlocksTheme from './theme';
 
 interface Props {
   programs: ProgramMeta[]
@@ -72,6 +73,7 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
             colour: '#ccc',
             snap: true,
           },
+          theme: LightBlocksTheme,
           renderer: 'zelos'
         }}
         initialXml={program.source}
