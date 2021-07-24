@@ -1,4 +1,3 @@
-import Dotenv from 'dotenv';
 import express from 'express';
 import { Server } from 'socket.io';
 import * as http from 'http';
@@ -12,7 +11,17 @@ import Environment from './Environment';
 import installProgramRoutes from './api/programs';
 import installInterpreterRoutes from './api/interpreter';
 
-Dotenv.config();
+const REQUIRED_ENV_VARS = [
+  'HUE_BRIDGE_IP_ADDRESS',
+  'HUE_BRIDGE_CLIENT_KEY',
+  'HUE_BRIDGE_USER',
+];
+
+for (let envVar of REQUIRED_ENV_VARS) {
+  if (!process.env[envVar]) {
+    throw new Error(`Missing required env var: ${envVar}`);
+  }
+}
 
 const DIR_STATIC = path.resolve(__dirname, '../../ui/build/');
 
