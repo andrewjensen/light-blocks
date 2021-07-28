@@ -22,19 +22,30 @@ Go into the `scripts/` directory
 
 Run `node createUser.js` and follow the steps
 
-Create a `.env` file in the `server/` directory that looks like this:
+Then set environment variables from the values in the script output:
 
 ```bash
-HUE_BRIDGE_IP_ADDRESS=x.x.x.x
-HUE_BRIDGE_CLIENT_KEY=xxxxxxxxxxx
-HUE_BRIDGE_USER=xxxxxxxxxxx
+export HUE_BRIDGE_IP_ADDRESS=x.x.x.x
+export HUE_BRIDGE_CLIENT_KEY=xxxxxxxxxxx
+export HUE_BRIDGE_USER=xxxxxxxxxxx
 ```
 
 ### Step 2: Configure and run Light Blocks with the credentials
 
 #### Option 1: Docker
 
-Coming soon!
+```bash
+docker run \
+  -it \
+  --rm \
+  -p 4000:4000 \
+  --env HUE_BRIDGE_IP_ADDRESS \
+  --env HUE_BRIDGE_CLIENT_KEY \
+  --env HUE_BRIDGE_USER \
+  --env NODE_ENV=production \
+  --volume=/path/to/your/db-directory/:/db/ \
+  adj90/light-blocks
+```
 
 #### Option 2: Compiling locally
 

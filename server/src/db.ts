@@ -1,8 +1,12 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
+const DB_FILE_PATH = process.env.NODE_ENV === 'production'
+  ? '/db/lightblocks.sqlite'
+  : 'lightblocks.sqlite';
+
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'lightblocks.sqlite',
+  storage: DB_FILE_PATH,
   logging: false
 });
 
