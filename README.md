@@ -34,6 +34,10 @@ export HUE_BRIDGE_USER=xxxxxxxxxxx
 
 #### Option 1: Docker
 
+You can find the [adj90/light-blocks](https://hub.docker.com/r/adj90/light-blocks) image on Docker Hub.
+
+Run this command:
+
 ```bash
 docker run \
   -it \
@@ -46,6 +50,8 @@ docker run \
   --volume=/path/to/your/db-directory/:/db/ \
   adj90/light-blocks
 ```
+
+Then the server should be available at http://localhost:4000.
 
 #### Option 2: Compiling locally
 
