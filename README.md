@@ -56,7 +56,7 @@ Light Blocks is written in NodeJS. You'll need version 12.x or above.
 bin/build.sh
 
 # Then run the server:
-bin/run/sh
+bin/run.sh
 ```
 
 After building and running, the server should be available at http://localhost:4000.
