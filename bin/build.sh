@@ -4,13 +4,13 @@ set -euo pipefail
 
 echo "Building the UI..."
 pushd ui/
-npm install
+npm ci
 npm run build
 popd
 
 echo "Building the server..."
 pushd server/
-npm install
+npm ci
 npm run build
 popd
 
