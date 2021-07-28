@@ -30,5 +30,6 @@ jobs:
         with:
           push: true
           tags: adj90/light-blocks:latest
+          platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
