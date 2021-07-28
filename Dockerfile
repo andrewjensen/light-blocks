@@ -2,7 +2,7 @@ FROM node:12.22.3-alpine3.14
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache python3 py3-pip
+RUN apk add --no-cache gcc build-base python3 py3-pip
 
 COPY server/package*.json ./server/
 COPY ui/package*.json ./ui/
