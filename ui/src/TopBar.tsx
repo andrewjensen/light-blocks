@@ -37,7 +37,7 @@ const TopBar: React.FC<Props> = ({ programs, runningProgramId, onRun, onStop }) 
 
   return (
     <Container>
-      <AppTitle><TitleLink to="/">light-blocks</TitleLink></AppTitle>
+      <AppTitle><TitleLink to="/">Light Blocks</TitleLink></AppTitle>
 
       {editingProgram && (
         <>
