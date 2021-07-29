@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useReducer } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
