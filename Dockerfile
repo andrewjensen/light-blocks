@@ -1,8 +1,8 @@
-FROM node:12.22.3-alpine3.14
+FROM node:14-buster
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache gcc build-base python2
+# RUN apk add --no-cache gcc build-base python2
 
 COPY server/package*.json ./server/
 COPY ui/package*.json ./ui/
