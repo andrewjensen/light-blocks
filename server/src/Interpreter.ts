@@ -17,6 +17,11 @@ export interface ExecutionContext {
   lightId: number | null
 }
 
+type RuntimeStatus =
+  | { type: 'STOPPED' }
+  | { type: 'RUNNING' }
+  | { type: 'TERMINATING' }
+
 export type InterpreterEvent =
   | { type: 'STATUS_RUNNING', programId: number }
   | { type: 'STATUS_STOPPED' }
@@ -30,7 +35,7 @@ export default class Interpreter {
   private startBlock: Element | null
   private handlers: Map<string, IBlockHandler>
   private eventListener: EventListener
-  private isRunning: boolean
+  private status: RuntimeStatus
 
   constructor(environment: Environment) {
     this.environment = environment;
@@ -38,7 +43,7 @@ export default class Interpreter {
     this.startBlock = null;
     this.handlers = defineBlocks();
     this.eventListener = () => {};
-    this.isRunning = false;
+    this.status = { type: 'STOPPED' };
   }
 
   setEventListener(listener: EventListener) {
@@ -63,6 +68,10 @@ export default class Interpreter {
     return this.environment;
   }
 
+  isTerminating(): boolean {
+    return this.status.type === 'TERMINATING';
+  }
+
   /**
    * Run the program, notifying the event listener of state changes.
    */
@@ -73,7 +82,7 @@ export default class Interpreter {
       throw new Error('No program initialized');
     }
 
-    this.isRunning = true;
+    this.status = { type: 'RUNNING' };
     this.emitEvent({ type: 'STATUS_RUNNING', programId: this.program.id });
 
     const mainSequence = this.startBlock;
@@ -85,12 +94,13 @@ export default class Interpreter {
     };
     await this.executeSequence(mainSequence, initialContext);
 
+    this.status = { type: 'STOPPED' };
     this.emitEvent({ type: 'CURRENT_BLOCK', blockId: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
   }
 
   stop() {
-    this.isRunning = false;
+    this.status = { type: 'TERMINATING' };
   }
 
   /**
@@ -101,7 +111,7 @@ export default class Interpreter {
    */
   async executeSequence(firstBlock: Element, context: ExecutionContext) {
     let currentBlock: Element | null = firstBlock;
-    while (currentBlock && this.isRunning) {
+    while (currentBlock && this.status.type === 'RUNNING') {
       await this.execute(currentBlock, context);
       currentBlock = getNextBlock(currentBlock);
     }

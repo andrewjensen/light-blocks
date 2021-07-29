@@ -18,6 +18,10 @@ export default class LoopNTimesBlock implements IBlockHandler {
     }
 
     for (let i = 0; i < repeatTimes; i++) {
+      if (interpreter.isTerminating()) {
+        break;
+      }
+
       await interpreter.executeSequence(firstBlock, context);
     }
 

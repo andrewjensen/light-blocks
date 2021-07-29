@@ -16,6 +16,10 @@ export default class LoopForeverBlock implements IBlockHandler {
     }
 
     while (true) {
+      if (interpreter.isTerminating()) {
+        break;
+      }
+
       await interpreter.executeSequence(firstBlock, context);
     }
 
