@@ -34,7 +34,7 @@ export HUE_BRIDGE_USER=xxxxxxxxxxx
 
 #### Option 1: Docker
 
-You can find the [adj90/light-blocks](https://hub.docker.com/r/adj90/light-blocks) image on Docker Hub.
+You can find the [adj90/light-blocks](https://hub.docker.com/r/adj90/light-blocks) image on Docker Hub. The image is built for multiple processor architectures, including Raspberry Pi!
 
 Run this command:
 
