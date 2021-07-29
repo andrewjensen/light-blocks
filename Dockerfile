@@ -1,8 +1,8 @@
 FROM node:14-buster
 
 WORKDIR /usr/src/app
-
-# RUN apk add --no-cache gcc build-base python2
+VOLUME /db
+EXPOSE 4000
 
 COPY server/package*.json ./server/
 COPY ui/package*.json ./ui/
@@ -15,7 +15,4 @@ COPY . .
 RUN cd server/ && npm run build
 RUN cd ui/ && npm run build
 
-VOLUME /db
-
-EXPOSE 4000
 CMD NODE_ENV=production node ./server/dist/app.js
