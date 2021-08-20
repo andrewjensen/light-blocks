@@ -8,6 +8,7 @@ import { defineBlocks } from '../blocks';
 import { ProgramMeta } from '../common/types';
 import { TOOLBOX_CATEGORIES } from './toolbox';
 import LightBlocksTheme from './theme';
+import FieldColorComponents from './FieldColorComponents';
 
 interface Props {
   programs: ProgramMeta[]
@@ -21,6 +22,10 @@ interface EditorUrlParams {
 }
 
 defineBlocks();
+
+// FIXME: what is wrong with the types?
+// @ts-ignore
+Blockly.fieldRegistry.register('field_color_components', FieldColorComponents);
 
 const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, onUpdateSource }) => {
   const { programId: rawProgramId } = useParams<EditorUrlParams>();

@@ -1,4 +1,5 @@
 import Blockly, { Block } from 'blockly';
+import FieldColorComponents from './Editor/FieldColorComponents';
 
 export function defineBlocks() {
   Blockly.Blocks['start'] = {
@@ -118,6 +119,23 @@ export function defineBlocks() {
       block.appendDummyInput()
           .appendField("color:")
           .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
+      block.setOutput(true, "Color");
+      block.setStyle("color_blocks");
+      block.setTooltip("");
+      block.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['color_experimental'] = {
+    init: function() {
+      let block = this as Block;
+
+      // @ts-ignore
+      let colorField: any = new FieldColorComponents("60, 0, 0");
+
+      block.appendDummyInput()
+          .appendField("color:")
+          .appendField(colorField, "COLOR");
       block.setOutput(true, "Color");
       block.setStyle("color_blocks");
       block.setTooltip("");
