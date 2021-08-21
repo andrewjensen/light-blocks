@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 import ColorPicker from './ColorPicker';
 
-const DEFAULT_VALUE = '60, 100, 100';
+const DEFAULT_VALUE = '240,100,100';
 
 const FIELD_COLOUR_DEFAULT_WIDTH = 30;
 const FIELD_COLOUR_DEFAULT_HEIGHT = 30;
@@ -24,7 +24,7 @@ Blockly.utils.object.inherits(FieldColorComponents, Blockly.Field);
 
 FieldColorComponents.prototype.SERIALIZABLE = true;
 
-Blockly.FieldColour.prototype.CURSOR = 'default';
+FieldColorComponents.prototype.CURSOR = 'default';
 
 FieldColorComponents.prototype.isDirty_ = false;
 
@@ -71,15 +71,30 @@ FieldColorComponents.prototype.applyColour = function() {
 };
 
 FieldColorComponents.prototype.getText = function() {
-  return 'Hello world';
+  const { hue, saturation, brightness } = this.getHSB_();
+  return `H ${hue}, S ${saturation}, B ${brightness}`;
+};
+
+FieldColorComponents.prototype.getHSB_ = function() {
+  const [hue, saturation, brightness] = this.value_.split(',');
+  return {
+    hue: parseInt(hue),
+    saturation: parseInt(saturation),
+    brightness: parseInt(brightness),
+  };
 };
 
 FieldColorComponents.prototype.doClassValidation_ = function(opt_newValue) {
   if (typeof opt_newValue != 'string') {
     return null;
   }
-  return Blockly.utils.colour.parse(opt_newValue);
+  return opt_newValue;
 };
+
+FieldColorComponents.prototype.updateValue_ = function(hue, saturation, brightness) {
+  const combinedValue = `${hue},${saturation},${brightness}`;
+  this.setValue(combinedValue);
+}
 
 FieldColorComponents.prototype.showEditor_ = function() {
   this.dropdownCreate_();
@@ -95,14 +110,21 @@ FieldColorComponents.prototype.showEditor_ = function() {
 FieldColorComponents.prototype.dropdownCreate_ = function() {
   const wrapper = document.createElement('div');
 
+  const { hue, saturation, brightness } = this.getHSB_();
+
   ReactDOM.render(
     <React.StrictMode>
-      <ColorPicker />
+      <ColorPicker
+        initialHue={hue}
+        initialSaturation={saturation}
+        initialBrightness={brightness}
+        onUpdateValue={(hue, saturation, brightness) => {
+          this.updateValue_(hue, saturation, brightness);
+        }}
+      />
     </React.StrictMode>,
     wrapper
   );
-
-  console.log('created the dropdown');
 
   this.picker_ = wrapper;
 }

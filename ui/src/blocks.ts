@@ -131,10 +131,9 @@ export function defineBlocks() {
       let block = this as Block;
 
       // @ts-ignore
-      let colorField: any = new FieldColorComponents("60, 0, 0");
+      let colorField: any = new FieldColorComponents("240,100,100");
 
       block.appendDummyInput()
-          .appendField("color:")
           .appendField(colorField, "COLOR");
       block.setOutput(true, "Color");
       block.setStyle("color_blocks");

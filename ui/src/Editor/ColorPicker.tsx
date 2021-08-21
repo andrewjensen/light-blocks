@@ -2,16 +2,39 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 interface Props {
-
+  initialHue: number
+  initialSaturation: number
+  initialBrightness: number
+  onUpdateValue: (hue: number, saturation: number, brightness: number) => void
 }
 
-const ColorPicker: React.FC<Props> = () => {
-  const [hue, setHue] = useState(120);
-  const [saturation, setSaturation] = useState(100);
-  const [brightness, setBrightness] = useState(100);
+const ColorPicker: React.FC<Props> = ({
+  initialHue,
+  initialSaturation,
+  initialBrightness,
+  onUpdateValue
+}) => {
+  const [hue, setHue] = useState(initialHue);
+  const [saturation, setSaturation] = useState(initialSaturation);
+  const [brightness, setBrightness] = useState(initialBrightness);
 
   const [r, g, b] = HSBToRGB(hue, saturation, brightness);
   const previewColor = `rgb(${r}, ${g}, ${b})`;
+
+  const handleUpdateHue = (updatedHue: number) => {
+    setHue(updatedHue);
+    onUpdateValue(updatedHue, saturation, brightness);
+  };
+
+  const handleUpdateSaturation = (updatedSaturation: number) => {
+    setSaturation(updatedSaturation);
+    onUpdateValue(hue, updatedSaturation, brightness);
+  };
+
+  const handleUpdateBrightness = (updatedBrightness: number) => {
+    setBrightness(updatedBrightness);
+    onUpdateValue(hue, saturation, updatedBrightness);
+  };
 
   return (
     <Container>
@@ -24,14 +47,14 @@ const ColorPicker: React.FC<Props> = () => {
             min="0"
             max="360"
             value={hue}
-            onChange={e => setHue(parseInt(e.target.value))}
+            onChange={e => handleUpdateHue(parseInt(e.target.value))}
           />
           <ComponentValue
             type="number"
             min="0"
             max="360"
             value={hue}
-            onChange={e => setHue(parseInt(e.target.value))}
+            onChange={e => handleUpdateHue(parseInt(e.target.value))}
           />
         </ColorComponent>
         <ColorComponent>
@@ -41,14 +64,14 @@ const ColorPicker: React.FC<Props> = () => {
             min="0"
             max="100"
             value={saturation}
-            onChange={e => setSaturation(parseInt(e.target.value))}
+            onChange={e => handleUpdateSaturation(parseInt(e.target.value))}
           />
           <ComponentValue
             type="number"
             min="0"
             max="100"
             value={saturation}
-            onChange={e => setSaturation(parseInt(e.target.value))}
+            onChange={e => handleUpdateSaturation(parseInt(e.target.value))}
           />
         </ColorComponent>
         <ColorComponent>
@@ -58,14 +81,14 @@ const ColorPicker: React.FC<Props> = () => {
             min="0"
             max="100"
             value={brightness}
-            onChange={e => setBrightness(parseInt(e.target.value))}
+            onChange={e => handleUpdateBrightness(parseInt(e.target.value))}
           />
           <ComponentValue
             type="number"
             min="0"
             max="100"
             value={brightness}
-            onChange={e => setBrightness(parseInt(e.target.value))}
+            onChange={e => handleUpdateBrightness(parseInt(e.target.value))}
           />
         </ColorComponent>
       </Controls>
