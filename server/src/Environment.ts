@@ -1,5 +1,6 @@
 import { v3 as NodeHueApi, model } from 'node-hue-api';
 import { Api } from 'node-hue-api/dist/esm/api/Api';
+import { clamp, modulo } from './mathUtils';
 
 import { pause } from './timingUtils';
 
@@ -94,16 +95,20 @@ export default class Environment {
   }
 
   async setColor(lightId: number | null, hue: number, saturation: number, brightness: number) {
-    const hueScaled = hue * 182.0;
+    const hueRotated = modulo(hue, 360);
+    const hueScaled = hueRotated * 182.0;
 
-    console.log(`setColor ${hueScaled} ${saturation} ${brightness}`);
+    const saturationClamped = clamp(saturation, 0, 100);
+    const brightnessClamped = clamp(brightness, 0, 100);
+
+    console.log(`setColor ${hueScaled} ${saturationClamped} ${brightnessClamped}`);
 
     if (lightId) {
       const newState = new model.LightState()
         .on()
         .hue(hueScaled)
-        .saturation(saturation)
-        .brightness(brightness)
+        .saturation(saturationClamped)
+        .brightness(brightnessClamped)
         .transition(DEFAULT_TRANSITION_TIME_MS);
 
       return Promise.all([
@@ -114,8 +119,8 @@ export default class Environment {
       const newState = new model.GroupState()
         .on()
         .hue(hueScaled)
-        .saturation(saturation)
-        .brightness(brightness)
+        .saturation(saturationClamped)
+        .brightness(brightnessClamped)
         .transition(DEFAULT_TRANSITION_TIME_MS);
 
       return Promise.all([
