@@ -7,12 +7,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ColorPicker from './ColorPicker';
+import { HSBToRGB } from './HSBtoRGB';
 
 const DEFAULT_VALUE = '240,100,100';
 
-const FIELD_COLOUR_DEFAULT_WIDTH = 30;
-const FIELD_COLOUR_DEFAULT_HEIGHT = 30;
-const FIELD_COLOUR_FULL_BLOCK = true;
+const FIELD_COLOUR_DEFAULT_WIDTH = 300;
+const FIELD_COLOUR_DEFAULT_HEIGHT = 200;
 
 function FieldColorComponents(opt_value: string, opt_validator?: Function, opt_config?: Object) {
   FieldColorComponents.superClass_.constructor.call(this, opt_value, opt_validator, opt_config);
@@ -40,39 +40,29 @@ FieldColorComponents.initView = function() {
     FIELD_COLOUR_DEFAULT_HEIGHT
   );
 
-  if (!FIELD_COLOUR_FULL_BLOCK) {
-    this.createBorderRect_();
-    this.borderRect_.style['fillOpacity'] = '1';
-  } else {
-    this.clickTarget_ = this.sourceBlock_.getSvgRoot();
-  }
+  this.createBorderRect_();
+  this.borderRect_.style['fillOpacity'] = '1';
+
+  // this.clickTarget_ = this.sourceBlock_.getSvgRoot();
 };
 
 FieldColorComponents.prototype.configure_ = function(config) {
   FieldColorComponents.superClass_.configure_.call(this, config);
-  if (config['colourOptions']) {
-    this.colours_ = config['colourOptions'];
-    this.titles_ = config['colourTitles'];
-  }
-  if (config['columns']) {
-    this.columns_ = config['columns'];
-  }
 };
 
 FieldColorComponents.prototype.applyColour = function() {
-  if (!FIELD_COLOUR_FULL_BLOCK) {
-    if (this.borderRect_) {
-      this.borderRect_.style.fill = /** @type {string} */ (this.getValue());
-    }
-  } else {
-    this.sourceBlock_.pathObject.svgPath.setAttribute('fill', this.getValue());
-    this.sourceBlock_.pathObject.svgPath.setAttribute('stroke', '#fff');
+  if (this.borderRect_) {
+    const { hue, saturation, brightness } = this.getHSB_();
+    const [r, g, b] = HSBToRGB(hue, saturation, brightness);
+    this.borderRect_.style.fill = `rgb(${r}, ${g}, ${b})`;
   }
+
+  // Set block's fill color to black
+  this.sourceBlock_.pathObject.svgPath.setAttribute('fill', "#000");
 };
 
 FieldColorComponents.prototype.getText = function() {
-  const { hue, saturation, brightness } = this.getHSB_();
-  return `H ${hue}, S ${saturation}, B ${brightness}`;
+  return '    ';
 };
 
 FieldColorComponents.prototype.getHSB_ = function() {
@@ -94,6 +84,7 @@ FieldColorComponents.prototype.doClassValidation_ = function(opt_newValue) {
 FieldColorComponents.prototype.updateValue_ = function(hue, saturation, brightness) {
   const combinedValue = `${hue},${saturation},${brightness}`;
   this.setValue(combinedValue);
+  this.applyColour();
 }
 
 FieldColorComponents.prototype.showEditor_ = function() {
