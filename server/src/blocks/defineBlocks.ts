@@ -5,10 +5,9 @@ import LightOffBlock from './colors/LightOffBlock';
 import WaitBlock from './timing/WaitBlock';
 import NumberBlock from './math/NumberBlock';
 import RandomBetweenBlock from './math/RandomBetweenBlock';
-import ColorFromComponentsBlock from './colors/ColorFromComponentsBlock';
 import SetColorBlock from './colors/SetColorBlock';
-import ColorExperimentalBlock from './colors/ColorExperimentalBlock';
-import ColorSimpleBlock from './colors/ColorSimpleBlock';
+import ColorFromComponentsBlock from './colors/ColorFromComponentsBlock';
+import ColorPickerBlock from './colors/ColorPickerBlock';
 import LoopForeverBlock from './control/LoopForeverBlock';
 import LoopNTimesBlock from './control/LoopNTimesBlock';
 import IfElseBlock from './control/IfElseBlock';
@@ -22,9 +21,8 @@ import RunDuplicateProcessesBlock from './control/RunDuplicateProcessesBlock';
 
 const TO_DEFINE: IBlockHandler[] = [
   // colors
-  new ColorExperimentalBlock(),
   new ColorFromComponentsBlock(),
-  new ColorSimpleBlock(),
+  new ColorPickerBlock(),
   new LightOffBlock(),
   new LightOnBlock(),
   new SetColorBlock(),

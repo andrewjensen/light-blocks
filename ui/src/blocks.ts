@@ -113,20 +113,7 @@ export function defineBlocks() {
     }
   };
 
-  Blockly.Blocks['color_simple'] = {
-    init: function() {
-      let block = this as Block;
-      block.appendDummyInput()
-          .appendField("color:")
-          .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
-      block.setOutput(true, "Color");
-      block.setStyle("color_blocks");
-      block.setTooltip("");
-      block.setHelpUrl("");
-    }
-  };
-
-  Blockly.Blocks['color_experimental'] = {
+  Blockly.Blocks['color_picker'] = {
     init: function() {
       let block = this as Block;
 

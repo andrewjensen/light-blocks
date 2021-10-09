@@ -9,9 +9,9 @@ type ColorComponents = {
   brightness: number,
 }
 
-export default class ColorExperimentalBlock implements IBlockHandler {
+export default class ColorPickerBlock implements IBlockHandler {
   getType() {
-    return 'color_experimental';
+    return 'color_picker';
   }
 
   async evaluate(block: Element, interpreter: Interpreter, context: ExecutionContext): Promise<ProgramValue> {
