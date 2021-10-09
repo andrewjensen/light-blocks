@@ -20,7 +20,7 @@ export const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
       { type: 'light_on' },
       { type: 'light_off' },
       { type: 'set_color' },
-      { type: 'color_simple' },
+      { type: 'color_picker' },
       { type: 'color_components' },
     ]
   },

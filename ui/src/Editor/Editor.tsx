@@ -8,6 +8,8 @@ import { defineBlocks } from '../blocks';
 import { ProgramMeta } from '../common/types';
 import { TOOLBOX_CATEGORIES } from './toolbox';
 import LightBlocksTheme from './theme';
+import FieldColorComponents from './FieldColorComponents';
+import useDebounce from './useDebounce';
 
 interface Props {
   programs: ProgramMeta[]
@@ -20,7 +22,11 @@ interface EditorUrlParams {
   programId?: string
 }
 
+const DEBOUNCE_TIME_MS = 1000;
+
 defineBlocks();
+
+Blockly.fieldRegistry.register('field_color_components', FieldColorComponents);
 
 const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, onUpdateSource }) => {
   const { programId: rawProgramId } = useParams<EditorUrlParams>();
@@ -31,7 +37,14 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
   const program = programs.find(program => program.id === programId);
 
   const [workspace, setWorkspace] = useState<WorkspaceSvg | null>(null);
-  const [previousSource, setPreviousSource] = useState<string>('');
+  const [source, setSource] = useState<string>('');
+  const debouncedSource = useDebounce(source, DEBOUNCE_TIME_MS);
+
+  useEffect(() => {
+    if (debouncedSource !== '') {
+      onUpdateSource(programId, debouncedSource);
+    }
+  }, [debouncedSource, programId, onUpdateSource]);
 
   useEffect(() => {
     if (workspace && programId === runningProgramId) {
@@ -48,13 +61,7 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
       setWorkspace(changedWorkspace);
     }
 
-    if (text !== previousSource) {
-      setPreviousSource(text);
-
-      if (previousSource !== '') {
-        onUpdateSource(programId, text);
-      }
-    }
+    setSource(text);
   }
 
   if (!program) {

@@ -68,11 +68,14 @@ function App() {
     dispatch({ type: 'PROGRAM_CREATE', program });
   }
 
-  const handleUpdateSource = async (programId: number, source: string) => {
-    console.log('setting source:', source);
+  const handleUpdateSource = useCallback(async (programId: number, source: string) => {
+    console.groupCollapsed("Setting source");
+    console.log(source);
+    console.groupEnd();
+
     await editProgram(programId, { source });
     dispatch({ type: 'PROGRAM_SET_SOURCE', programId, source });
-  }
+  }, []);
 
   const handleDelete = async (programId: number) => {
     await deleteProgram(programId);
