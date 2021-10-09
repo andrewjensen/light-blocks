@@ -69,7 +69,10 @@ function App() {
   }
 
   const handleUpdateSource = useCallback(async (programId: number, source: string) => {
-    console.log('setting source:', source);
+    console.groupCollapsed("Setting source");
+    console.log(source);
+    console.groupEnd();
+
     await editProgram(programId, { source });
     dispatch({ type: 'PROGRAM_SET_SOURCE', programId, source });
   }, []);
