@@ -42,8 +42,6 @@ FieldColorComponents.initView = function() {
 
   this.createBorderRect_();
   this.borderRect_.style['fillOpacity'] = '1';
-
-  // this.clickTarget_ = this.sourceBlock_.getSvgRoot();
 };
 
 FieldColorComponents.prototype.configure_ = function(config) {
@@ -121,39 +119,7 @@ FieldColorComponents.prototype.dropdownCreate_ = function() {
 }
 
 FieldColorComponents.prototype.dropdownDispose_ = function() {
-  // if (this.onClickWrapper_) {
-  //   Blockly.browserEvents.unbind(this.onClickWrapper_);
-  //   this.onClickWrapper_ = null;
-  // }
-  // if (this.onMouseMoveWrapper_) {
-  //   Blockly.browserEvents.unbind(this.onMouseMoveWrapper_);
-  //   this.onMouseMoveWrapper_ = null;
-  // }
-  // if (this.onMouseEnterWrapper_) {
-  //   Blockly.browserEvents.unbind(this.onMouseEnterWrapper_);
-  //   this.onMouseEnterWrapper_ = null;
-  // }
-  // if (this.onMouseLeaveWrapper_) {
-  //   Blockly.browserEvents.unbind(this.onMouseLeaveWrapper_);
-  //   this.onMouseLeaveWrapper_ = null;
-  // }
-  // if (this.onKeyDownWrapper_) {
-  //   Blockly.browserEvents.unbind(this.onKeyDownWrapper_);
-  //   this.onKeyDownWrapper_ = null;
-  // }
   this.picker_ = null;
-  // this.highlightedIndex_ = null;
 };
-
-
-
-// const FieldColorComponents: IRegistrableField = (opt_value: string, opt_validator: Function, opt_config: Object) => {
-
-//   console.log('new FieldColorComponent');
-// };
-
-// FieldColorComponents.fromJson = (json: Object) => {
-//   throw new Error('TODO: implement');
-// };
 
 export default FieldColorComponents;

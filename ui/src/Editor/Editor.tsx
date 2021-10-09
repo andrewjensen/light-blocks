@@ -26,8 +26,6 @@ const DEBOUNCE_TIME_MS = 1000;
 
 defineBlocks();
 
-// FIXME: what is wrong with the types?
-// @ts-ignore
 Blockly.fieldRegistry.register('field_color_components', FieldColorComponents);
 
 const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, onUpdateSource }) => {
