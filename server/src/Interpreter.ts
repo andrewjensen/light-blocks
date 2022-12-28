@@ -1,5 +1,4 @@
 import { DOMParser } from 'xmldom';
-import Environment from './Environment';
 import { ProgramValue } from './ProgramValue';
 import {
   getStartBlock,
@@ -11,7 +10,7 @@ import {
 } from './blockUtils';
 import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
-import { ProgramMeta } from './types';
+import { ProgramMeta, LightEnvironment } from './types';
 
 export interface ExecutionContext {
   lightId: number | null
@@ -30,14 +29,14 @@ export type InterpreterEvent =
 type EventListener = (event: InterpreterEvent) => void;
 
 export default class Interpreter {
-  private environment: Environment
+  private environment: LightEnvironment
   private program: ProgramMeta | null
   private startBlock: Element | null
   private handlers: Map<string, IBlockHandler>
   private eventListener: EventListener
   private status: RuntimeStatus
 
-  constructor(environment: Environment) {
+  constructor(environment: LightEnvironment) {
     this.environment = environment;
     this.program = null;
     this.startBlock = null;
@@ -64,7 +63,7 @@ export default class Interpreter {
     this.startBlock = getStartBlock(programXml);
   }
 
-  getEnvironment(): Environment {
+  getEnvironment(): LightEnvironment {
     return this.environment;
   }
 
