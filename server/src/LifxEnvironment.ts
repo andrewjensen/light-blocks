@@ -1,17 +1,28 @@
-import { clamp, modulo } from './mathUtils';
+import fetch from 'node-fetch';
 
-import { pause } from './timingUtils';
+import { clamp, modulo } from './mathUtils.js';
+import { pause } from './timingUtils.js';
 
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 
 export default class LifxEnvironment {
+  private apiToken: string
+
   constructor() {
+    this.apiToken = process.env.LIFX_API_TOKEN || '';
   }
 
   async initialize() {
     console.log('Initializing LIFX light environment...');
 
-    // TODO: implement
+    const allLightsResponse = await fetch('https://api.lifx.com/v1/lights/all', {
+      headers: {
+        'Authorization': `Bearer ${this.apiToken}`
+      }
+    });
+    const allLightsJson = await allLightsResponse.json;
+
+    console.log('All lights result:', allLightsJson);
   }
 
   getReachableLightIds(): number[] {

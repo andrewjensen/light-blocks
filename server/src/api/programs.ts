@@ -1,5 +1,5 @@
 import express from 'express';
-import { json as jsonBodyParser } from 'body-parser';
+import bodyParser from 'body-parser';
 
 import {
   listPrograms,
@@ -11,7 +11,7 @@ import {
 
 export default function installProgramRoutes(app: express.Application) {
   const router = express.Router();
-  router.use(jsonBodyParser());
+  router.use(bodyParser.json());
 
   app.use('/api/programs', router);
 

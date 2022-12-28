@@ -3,11 +3,12 @@ import { Server } from 'socket.io';
 import * as http from 'http';
 import path from 'path';
 import cors from 'cors';
-import { text as textBodyParser } from 'body-parser';
+import bodyParser from 'body-parser';
+import * as url from 'url';
 
 import { connectToDB } from './db.js';
 import Interpreter, { InterpreterEvent } from './Interpreter.js';
-import HueEnvironment from './HueEnvironment.js';
+// import HueEnvironment from './HueEnvironment.js';
 import LifxEnvironment from './LifxEnvironment.js';
 import installProgramRoutes from './api/programs.js';
 import installInterpreterRoutes from './api/interpreter.js';
@@ -25,12 +26,13 @@ const ADAPTER_ENV_VARS: { [adapterName: string]: string[] } = {
 };
 
 const ADAPTER_CREATORS: { [adapterName: string]: () => LightEnvironment } = {
-  'HUE': () => new HueEnvironment(),
+  // 'HUE': () => new HueEnvironment(),
   'LIFX': () => new LifxEnvironment(),
 };
 
 validateEnv();
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const DIR_STATIC = path.resolve(__dirname, '../../ui/build/');
 
 const app: express.Application = express();
@@ -44,7 +46,7 @@ const io = new Server(server, {
 const port = 4000;
 
 app.use(cors());
-app.use(textBodyParser());
+app.use(bodyParser.text());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(DIR_STATIC));

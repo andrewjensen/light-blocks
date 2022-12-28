@@ -8,6 +8,7 @@
     "start": "npm run build && npm run serve",
     "build": "tsc",
     "serve": "node --unhandled-rejections=strict ./dist/app.js",
+    "serve-v2": "ts-node --esm ./src/app.ts",
     "test": "jest"
   },
   "author": "",
@@ -16,10 +17,12 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "node-fetch": "^3.3.0",
     "node-hue-api": "^5.0.0-beta.2",
     "sequelize": "^6.6.4",
     "socket.io": "^4.1.2",
     "sqlite3": "^5.0.2",
+    "ts-node": "^10.9.1",
     "xmldom": "^0.6.0"
   },
   "devDependencies": {
