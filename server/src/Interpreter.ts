@@ -1,5 +1,6 @@
 import { DOMParser } from 'xmldom';
-import { ProgramValue } from './ProgramValue';
+
+import { ProgramValue } from './ProgramValue.js';
 import {
   getStartBlock,
   getNextBlock,
@@ -7,10 +8,10 @@ import {
   getBlockType,
   stringifyBlock,
   getNestedValue
-} from './blockUtils';
-import { defineBlocks } from './blocks/defineBlocks';
-import { IBlockHandler } from './blocks/IBlockHandler';
-import { ProgramMeta, LightEnvironment } from './types';
+} from './blockUtils.js';
+import { defineBlocks } from './blocks/defineBlocks.js';
+import { IBlockHandler } from './blocks/IBlockHandler.js';
+import { ProgramMeta, LightEnvironment } from './types.js';
 
 export interface ExecutionContext {
   lightId: number | null

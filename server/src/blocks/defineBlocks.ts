@@ -1,23 +1,23 @@
-import { IBlockHandler } from './IBlockHandler';
-import StartBlock from './control/StartBlock';
-import LightOnBlock from './colors/LightOnBlock';
-import LightOffBlock from './colors/LightOffBlock';
-import WaitBlock from './timing/WaitBlock';
-import NumberBlock from './math/NumberBlock';
-import RandomBetweenBlock from './math/RandomBetweenBlock';
-import SetColorBlock from './colors/SetColorBlock';
-import ColorFromComponentsBlock from './colors/ColorFromComponentsBlock';
-import ColorPickerBlock from './colors/ColorPickerBlock';
-import LoopForeverBlock from './control/LoopForeverBlock';
-import LoopNTimesBlock from './control/LoopNTimesBlock';
-import IfElseBlock from './control/IfElseBlock';
-import BooleanBlock from './logic/BooleanBlock';
-import CompareBlock from './logic/CompareBlock';
-import LogicAndBlock from './logic/LogicAndBlock';
-import LogicOrBlock from './logic/LogicOrBlock';
-import LogicNegateBlock from './logic/LogicNegateBlock';
-import RunDistinctProcessesBlock from './control/RunDistinctProcessesBlock';
-import RunDuplicateProcessesBlock from './control/RunDuplicateProcessesBlock';
+import { IBlockHandler } from './IBlockHandler.js';
+import StartBlock from './control/StartBlock.js';
+import LightOnBlock from './colors/LightOnBlock.js';
+import LightOffBlock from './colors/LightOffBlock.js';
+import WaitBlock from './timing/WaitBlock.js';
+import NumberBlock from './math/NumberBlock.js';
+import RandomBetweenBlock from './math/RandomBetweenBlock.js';
+import SetColorBlock from './colors/SetColorBlock.js';
+import ColorFromComponentsBlock from './colors/ColorFromComponentsBlock.js';
+import ColorPickerBlock from './colors/ColorPickerBlock.js';
+import LoopForeverBlock from './control/LoopForeverBlock.js';
+import LoopNTimesBlock from './control/LoopNTimesBlock.js';
+import IfElseBlock from './control/IfElseBlock.js';
+import BooleanBlock from './logic/BooleanBlock.js';
+import CompareBlock from './logic/CompareBlock.js';
+import LogicAndBlock from './logic/LogicAndBlock.js';
+import LogicOrBlock from './logic/LogicOrBlock.js';
+import LogicNegateBlock from './logic/LogicNegateBlock.js';
+import RunDistinctProcessesBlock from './control/RunDistinctProcessesBlock.js';
+import RunDuplicateProcessesBlock from './control/RunDuplicateProcessesBlock.js';
 
 const TO_DEFINE: IBlockHandler[] = [
   // colors

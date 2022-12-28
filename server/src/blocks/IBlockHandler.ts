@@ -1,5 +1,5 @@
-import Interpreter, { ExecutionContext } from '../Interpreter';
-import { ProgramValue } from '../ProgramValue';
+import Interpreter, { ExecutionContext } from '../Interpreter.js';
+import { ProgramValue } from '../ProgramValue.js';
 
 export interface IBlockHandler {
   getType: () => string

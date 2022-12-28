@@ -1,7 +1,7 @@
-import { getNestedStatement } from '../../blockUtils';
-import Interpreter, { ExecutionContext } from '../../Interpreter';
-import { ProgramValue } from '../../ProgramValue';
-import { IBlockHandler } from '../IBlockHandler';
+import { getNestedStatement } from '../../blockUtils.js';
+import Interpreter, { ExecutionContext } from '../../Interpreter.js';
+import { ProgramValue } from '../../ProgramValue.js';
+import { IBlockHandler } from '../IBlockHandler.js';
 
 export default class RunDistinctProcessesBlock implements IBlockHandler {
   getType() {

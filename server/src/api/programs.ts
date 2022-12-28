@@ -7,7 +7,7 @@ import {
   createProgram,
   editProgram,
   deleteProgram
-} from '../programs';
+} from '../programs.js';
 
 export default function installProgramRoutes(app: express.Application) {
   const router = express.Router();

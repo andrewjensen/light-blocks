@@ -5,13 +5,13 @@ import path from 'path';
 import cors from 'cors';
 import { text as textBodyParser } from 'body-parser';
 
-import { connectToDB } from './db';
-import Interpreter, { InterpreterEvent } from './Interpreter';
-import HueEnvironment from './HueEnvironment';
-import LifxEnvironment from './LifxEnvironment';
-import installProgramRoutes from './api/programs';
-import installInterpreterRoutes from './api/interpreter';
-import { LightEnvironment } from './types';
+import { connectToDB } from './db.js';
+import Interpreter, { InterpreterEvent } from './Interpreter.js';
+import HueEnvironment from './HueEnvironment.js';
+import LifxEnvironment from './LifxEnvironment.js';
+import installProgramRoutes from './api/programs.js';
+import installInterpreterRoutes from './api/interpreter.js';
+import { LightEnvironment } from './types.js';
 
 const ADAPTER_ENV_VARS: { [adapterName: string]: string[] } = {
   'HUE': [

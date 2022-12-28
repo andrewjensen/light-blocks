@@ -1,7 +1,7 @@
-import Interpreter, { ExecutionContext } from '../../Interpreter';
-import { ProgramValue } from '../../ProgramValue';
-import { IBlockHandler } from '../IBlockHandler';
-import { getFieldValue } from '../../blockUtils';
+import Interpreter, { ExecutionContext } from '../../Interpreter.js';
+import { ProgramValue } from '../../ProgramValue.js';
+import { IBlockHandler } from '../IBlockHandler.js';
+import { getFieldValue } from '../../blockUtils.js';
 
 export default class BooleanBlock implements IBlockHandler {
   getType() {

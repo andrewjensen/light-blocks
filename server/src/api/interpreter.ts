@@ -1,7 +1,7 @@
 import express from 'express';
 import { json as jsonBodyParser } from 'body-parser';
-import { getProgram } from '../programs';
-import Interpreter from '../Interpreter';
+import { getProgram } from '../programs.js';
+import Interpreter from '../Interpreter.js';
 
 export default function installInterpreterRoutes(app: express.Application, interpeter: Interpreter) {
   const router = express.Router();

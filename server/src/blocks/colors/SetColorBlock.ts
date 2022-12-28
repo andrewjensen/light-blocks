@@ -1,6 +1,6 @@
-import Interpreter, { ExecutionContext } from '../../Interpreter';
-import { castColorValue, ProgramValue } from '../../ProgramValue';
-import { IBlockHandler } from '../IBlockHandler';
+import Interpreter, { ExecutionContext } from '../../Interpreter.js';
+import { castColorValue, ProgramValue } from '../../ProgramValue.js';
+import { IBlockHandler } from '../IBlockHandler.js';
 
 export default class SetColorBlock implements IBlockHandler {
   getType() {

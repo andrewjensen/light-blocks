@@ -1,8 +1,8 @@
 import { v3 as NodeHueApi, model } from 'node-hue-api';
 import { Api } from 'node-hue-api/dist/esm/api/Api';
-import { clamp, modulo } from './mathUtils';
 
-import { pause } from './timingUtils';
+import { clamp, modulo } from './mathUtils.js';
+import { pause } from './timingUtils.js';
 
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 

@@ -1,4 +1,4 @@
-import { clamp, modulo } from './mathUtils';
+import { clamp, modulo } from './mathUtils.js';
 
 describe('modulo', () => {
   it('returns the modulo of some positive numbers', () => {

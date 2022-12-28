@@ -1,5 +1,5 @@
-import { ProgramMeta } from './types';
-import { Program } from './db';
+import { ProgramMeta } from './types.js';
+import { Program } from './db.js';
 
 interface EditProgramParams {
   title?: string

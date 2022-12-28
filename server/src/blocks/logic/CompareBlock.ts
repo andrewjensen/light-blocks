@@ -1,7 +1,7 @@
-import Interpreter, { ExecutionContext } from '../../Interpreter';
-import { castNumberValue, ProgramValue } from '../../ProgramValue';
-import { IBlockHandler } from '../IBlockHandler';
-import { getFieldValue } from '../../blockUtils';
+import Interpreter, { ExecutionContext } from '../../Interpreter.js';
+import { castNumberValue, ProgramValue } from '../../ProgramValue.js';
+import { IBlockHandler } from '../IBlockHandler.js';
+import { getFieldValue } from '../../blockUtils.js';
 
 type ComparisonOperator =
   | 'EQ'
