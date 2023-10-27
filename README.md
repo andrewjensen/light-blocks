@@ -14,13 +14,7 @@ Light Blocks is a [visual programming language](https://en.wikipedia.org/wiki/Vi
 
 ### Step 1: Get credentials to your Philips Hue bridge
 
-TODO: clean up this section!
-
-Go into the `scripts/` directory
-
-`npm install`
-
-Run `node createUser.js` and follow the steps
+Follow the official [getting started guide](https://developers.meethue.com/develop/hue-api-v2/getting-started/) to create a username (also called "appkey") and client key.
 
 Then set environment variables from the values in the script output:
 
