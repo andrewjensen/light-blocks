@@ -117,8 +117,7 @@ export function defineBlocks() {
     init: function() {
       let block = this as Block;
 
-      // @ts-ignore
-      let colorField: any = new FieldColorComponents("240,100,100");
+      let colorField = new FieldColorComponents("240,100,100");
 
       block.appendDummyInput()
           .appendField(colorField, "COLOR");

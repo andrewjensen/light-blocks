@@ -49,7 +49,7 @@ Then the server should be available at http://localhost:4000.
 
 #### Option 2: Compiling locally
 
-Light Blocks is written in NodeJS. You'll need version 12.x or above.
+Light Blocks is written in NodeJS. You'll need version 18.x or above.
 
 ```bash
 # Install dependencies and build everything:

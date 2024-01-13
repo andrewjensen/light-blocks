@@ -1,60 +1,55 @@
-interface ToolboxCategory {
-  name: string,
-  custom?: CustomCategoryName,
-  blocks: ToolboxBlock[],
-}
+import Blockly from "blockly";
 
-interface ToolboxBlock {
-  type: string,
-  colour?: string,
-  // TODO: fill in with details from here:
-  // https://github.com/nbudin/react-blockly/blob/v6-stable/README.md
-}
-
-type CustomCategoryName = 'VARIABLE' | 'PROCEDURE';
-
-export const TOOLBOX_CATEGORIES: ToolboxCategory[] = [
-  {
-    name: 'Colors',
-    blocks: [
-      { type: 'light_on' },
-      { type: 'light_off' },
-      { type: 'set_color' },
-      { type: 'color_picker' },
-      { type: 'color_components' },
-    ]
-  },
-  {
-    name: 'Timing',
-    blocks: [
-      { type: 'wait' }
-    ]
-  },
-  {
-    name: 'Control',
-    blocks: [
-      { type: 'controls_ifelse' },
-      { type: 'loop_forever' },
-      { type: 'loop_n_times' },
-      { type: 'run_duplicate_processes'},
-      { type: 'run_distinct_processes'},
-    ]
-  },
-  {
-    name: 'Logic',
-    blocks: [
-      { type: 'logic_boolean' },
-      { type: 'logic_and' },
-      { type: 'logic_or' },
-      { type: 'logic_negate' },
-      { type: 'logic_compare' },
-    ]
-  },
-  {
-    name: 'Math',
-    blocks: [
-      { type: 'math_number' },
-      { type: 'math_random_between' }
-    ]
-  }
-];
+export const TOOLBOX: Blockly.utils.toolbox.ToolboxDefinition = {
+  kind: 'categoryToolbox',
+  contents: [
+    {
+      kind: 'category',
+      name: 'Colors',
+      contents: [
+        { kind: 'block', type: 'light_on' },
+        { kind: 'block', type: 'light_off' },
+        { kind: 'block', type: 'set_color' },
+        { kind: 'block', type: 'color_picker' },
+        { kind: 'block', type: 'color_components' },
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Timing',
+      contents: [
+        { kind: 'block', type: 'wait' }
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Control',
+      contents: [
+        { kind: 'block', type: 'controls_ifelse' },
+        { kind: 'block', type: 'loop_forever' },
+        { kind: 'block', type: 'loop_n_times' },
+        { kind: 'block', type: 'run_duplicate_processes'},
+        { kind: 'block', type: 'run_distinct_processes'},
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Logic',
+      contents: [
+        { kind: 'block', type: 'logic_boolean' },
+        { kind: 'block', type: 'logic_and' },
+        { kind: 'block', type: 'logic_or' },
+        { kind: 'block', type: 'logic_negate' },
+        { kind: 'block', type: 'logic_compare' },
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Math',
+      contents: [
+        { kind: 'block', type: 'math_number' },
+        { kind: 'block', type: 'math_random_between' }
+      ]
+    }
+  ]
+};
