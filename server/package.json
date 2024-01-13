@@ -19,6 +19,7 @@
     "sequelize": "^6.6.4",
     "socket.io": "^4.1.2",
     "sqlite3": "^5.0.2",
+    "winston": "^3.11.0",
     "xmldom": "^0.6.0"
   },
   "devDependencies": {

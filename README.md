@@ -19,9 +19,10 @@ Follow the official [getting started guide](https://developers.meethue.com/devel
 Then set environment variables from the values in the script output:
 
 ```bash
-export HUE_BRIDGE_IP_ADDRESS=x.x.x.x
-export HUE_BRIDGE_CLIENT_KEY=xxxxxxxxxxx
-export HUE_BRIDGE_USER=xxxxxxxxxxx
+export HUE_BRIDGE_IP_ADDRESS="x.x.x.x"
+export HUE_BRIDGE_CLIENT_KEY="xxxxxxxxxxx"
+export HUE_BRIDGE_USER="xxxxxxxxxxx"
+export LOG_LEVEL="info"
 ```
 
 ### Step 2: Configure and run Light Blocks with the credentials

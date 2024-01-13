@@ -1,4 +1,5 @@
 import { DOMParser } from 'xmldom';
+
 import Environment from './Environment';
 import { ProgramValue } from './ProgramValue';
 import {
@@ -12,6 +13,7 @@ import {
 import { defineBlocks } from './blocks/defineBlocks';
 import { IBlockHandler } from './blocks/IBlockHandler';
 import { ProgramMeta } from './types';
+import logger from './logger';
 
 export interface ExecutionContext {
   lightId: number | null
@@ -51,9 +53,9 @@ export default class Interpreter {
   }
 
   setProgram(inProgram: ProgramMeta) {
-    console.log('setting program:');
-    console.log(inProgram.source);
-    console.log('');
+    logger.debug('Interpreter: Setting current program:');
+    logger.debug(inProgram.source);
+    logger.debug('');
 
     this.program = inProgram;
 
@@ -76,7 +78,7 @@ export default class Interpreter {
    * Run the program, notifying the event listener of state changes.
    */
   async run() {
-    console.log('run()');
+    logger.debug('Interpreter.run()');
 
     if (!this.program) {
       throw new Error('No program initialized');
@@ -97,6 +99,8 @@ export default class Interpreter {
     this.status = { type: 'STOPPED' };
     this.emitEvent({ type: 'CURRENT_BLOCK', blockId: null });
     this.emitEvent({ type: 'STATUS_STOPPED' });
+
+    logger.debug('Interpreter.run() complete');
   }
 
   stop() {
@@ -124,7 +128,7 @@ export default class Interpreter {
    * @param context The execution context to run the sequence within
    */
   async execute(block: Element, context: ExecutionContext) {
-    console.log(`Interpreter.execute(): ${stringifyBlock(block)}`);
+    logger.debug(`Interpreter.execute(): ${stringifyBlock(block)}`);
 
     const blockId = getBlockId(block);
 
@@ -134,7 +138,7 @@ export default class Interpreter {
 
     await this.evaluate(block, context);
 
-    console.log('');
+    logger.debug('');
   }
 
   /**
