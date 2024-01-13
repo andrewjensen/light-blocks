@@ -20,10 +20,6 @@ class FieldColorComponents extends Blockly.Field {
   DEFAULT_VALUE = DEFAULT_VALUE;
   isDirty_ = false;
 
-  constructor(opt_value: string, opt_validator?: Function, opt_config?: Object) {
-    super(opt_value, opt_validator, opt_config);
-  }
-
   static fromJson = function(options: any): any {
     return new FieldColorComponents(options['colour'], undefined, options);
   }
