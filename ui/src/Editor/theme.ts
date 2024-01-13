@@ -7,11 +7,9 @@ const HUE_GREEN = '#53ab00';
 const HUE_BLUE = '#1692df';
 const HUE_VIOLET = '#60359c';
 
-// @ts-ignore
-const ClassicTheme = Blockly.Themes.Classic;
-
 const LightBlocksTheme = Blockly.Theme.defineTheme('lightBlocks', {
-  'base': ClassicTheme,
+  'name': 'LightBlocks',
+  'base': Blockly.Themes.Classic,
   'componentStyles': {
     // 'workspaceBackgroundColour': '#1e1e1e',
     // 'toolboxBackgroundColour': 'blackBackground',
@@ -57,5 +55,4 @@ const LightBlocksTheme = Blockly.Theme.defineTheme('lightBlocks', {
 
 export default LightBlocksTheme;
 
-// @ts-ignore
-// Blockly.Themes.LightBlocks = lightBlocksTheme;
+Object.assign(Blockly.Themes, { LightBlocks: LightBlocksTheme });

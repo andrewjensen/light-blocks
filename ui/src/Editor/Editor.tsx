@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import Blockly, { WorkspaceSvg } from 'blockly';
-import { BlocklyEditor } from 'react-blockly';
+import { useEffect, useRef } from 'react';
+import Blockly from 'blockly';
+import { useBlocklyWorkspace } from 'react-blockly/dist';
 import { useParams } from 'react-router-dom';
 
 import ViewContainer from '../common/components/ViewContainer';
 import { defineBlocks } from '../blocks';
 import { ProgramMeta } from '../common/types';
-import { TOOLBOX_CATEGORIES } from './toolbox';
+import { TOOLBOX } from './toolbox';
 import LightBlocksTheme from './theme';
 import FieldColorComponents from './FieldColorComponents';
 import useDebounce from './useDebounce';
@@ -36,33 +36,37 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
   const programId = parseInt(rawProgramId);
   const program = programs.find(program => program.id === programId);
 
-  const [workspace, setWorkspace] = useState<WorkspaceSvg | null>(null);
-  const [source, setSource] = useState<string>('');
-  const debouncedSource = useDebounce(source, DEBOUNCE_TIME_MS);
+  const blocklyRef = useRef(null);
+
+  const { workspace, xml } = useBlocklyWorkspace({
+    ref: blocklyRef,
+    workspaceConfiguration: {
+      grid: {
+        spacing: 20,
+        length: 3,
+        colour: '#ccc',
+        snap: true,
+      },
+      theme: LightBlocksTheme,
+      renderer: 'zelos'
+    },
+    toolboxConfiguration: TOOLBOX,
+    initialXml: program?.source,
+  });
+
+  const debouncedSource = useDebounce(xml, DEBOUNCE_TIME_MS);
 
   useEffect(() => {
-    if (debouncedSource !== '') {
+    if (debouncedSource !== null && debouncedSource !== '') {
       onUpdateSource(programId, debouncedSource);
     }
   }, [debouncedSource, programId, onUpdateSource]);
 
   useEffect(() => {
     if (workspace && programId === runningProgramId) {
-      const nullableBlock = currentBlockId as string; // Working around Blockly's incorrect type
-      workspace.highlightBlock(nullableBlock);
+      workspace.highlightBlock(currentBlockId);
     }
   }, [currentBlockId, programId, runningProgramId, workspace]);
-
-  const handleWorkspaceDidChange = (changedWorkspace: WorkspaceSvg) => {
-    const dom = Blockly.Xml.workspaceToDom(changedWorkspace);
-    const text = Blockly.Xml.domToPrettyText(dom);
-
-    if (!workspace) {
-      setWorkspace(changedWorkspace);
-    }
-
-    setSource(text);
-  }
 
   if (!program) {
     return null;
@@ -70,24 +74,9 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
 
   return (
     <ViewContainer>
-      <BlocklyEditor
-        wrapperDivClassName="fill-height"
-        toolboxCategories={TOOLBOX_CATEGORIES}
-        workspaceConfiguration={{
-          grid: {
-            spacing: 20,
-            length: 3,
-            colour: '#ccc',
-            snap: true,
-          },
-          theme: LightBlocksTheme,
-          renderer: 'zelos'
-        }}
-        initialXml={program.source}
-        workspaceDidChange={handleWorkspaceDidChange}
-      />
+      <div ref={blocklyRef} className="fill-height" />
     </ViewContainer>
-  );
+  )
 }
 
 export default Editor;
