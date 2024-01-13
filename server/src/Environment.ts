@@ -1,8 +1,9 @@
 import { v3 as NodeHueApi, model } from 'node-hue-api';
 import { Api } from 'node-hue-api/dist/esm/api/Api';
-import { clamp, modulo } from './mathUtils';
 
+import { clamp, modulo } from './mathUtils';
 import { pause } from './timingUtils';
+import logger from './logger';
 
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 
@@ -20,7 +21,7 @@ export default class Environment {
   }
 
   async initialize() {
-    console.log('Initializing environment...');
+    logger.info('Initializing environment...');
 
     const username = process.env.HUE_BRIDGE_USER || '';
     const ipAddress = process.env.HUE_BRIDGE_IP_ADDRESS || '';
@@ -43,7 +44,7 @@ export default class Environment {
       })
       .map(light => light.id as number);
 
-    console.log(`  Reachable light IDs: ${this.reachableLightIds.join(', ')}`);
+    logger.info(`  Reachable light IDs: ${this.reachableLightIds.join(', ')}`);
   }
 
   getReachableLightIds(): number[] {
@@ -101,7 +102,7 @@ export default class Environment {
     const saturationClamped = clamp(saturation, 0, 100);
     const brightnessClamped = clamp(brightness, 0, 100);
 
-    console.log(`setColor ${hueScaled} ${saturationClamped} ${brightnessClamped}`);
+    logger.debug(`setColor ${hueScaled} ${saturationClamped} ${brightnessClamped}`);
 
     if (lightId) {
       const newState = new model.LightState()
@@ -135,7 +136,7 @@ export default class Environment {
     const foundGroup = possibleGroups.find(group => group.name === GROUP_NAME);
 
     if (foundGroup) {
-      console.log('  Found existing light group to use');
+      logger.info('  Found existing light group to use');
       return foundGroup;
     } else {
       const lights = await this.client!.lights.getAll();
@@ -145,7 +146,7 @@ export default class Environment {
       groupSettings.lights = lights.map(light => `${light.id}`);
 
       const createdGroup = await this.client!.groups.createGroup(groupSettings);
-      console.log('  Created new light group to use');
+      logger.info('  Created new light group to use');
 
       return createdGroup;
     }

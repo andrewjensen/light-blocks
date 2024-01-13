@@ -1,5 +1,7 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
+import logger from './logger';
+
 const DB_FILE_PATH = process.env.NODE_ENV === 'production'
   ? '/db/lightblocks.sqlite'
   : 'lightblocks.sqlite';
@@ -11,7 +13,7 @@ const sequelize = new Sequelize({
 });
 
 export async function connectToDB() {
-  console.log('Connecting to DB...');
+  logger.info('Connecting to DB...');
 
   await sequelize.authenticate();
   await sequelize.sync({ alter: true });

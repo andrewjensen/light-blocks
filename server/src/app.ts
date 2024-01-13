@@ -10,6 +10,7 @@ import Interpreter, { InterpreterEvent } from './Interpreter';
 import Environment from './Environment';
 import installProgramRoutes from './api/programs';
 import installInterpreterRoutes from './api/interpreter';
+import logger from './logger';
 
 const REQUIRED_ENV_VARS = [
   'HUE_BRIDGE_IP_ADDRESS',
@@ -48,13 +49,6 @@ interpreter.setEventListener((event: InterpreterEvent) => {
   io.emit('message', event);
 });
 
-app.post('/program', (req: express.Request, res: express.Response) => {
-  interpreter.setProgram(req.body);
-  interpreter.run();
-
-  res.status(201).send("Received program");
-});
-
 installProgramRoutes(app);
 installInterpreterRoutes(app, interpreter);
 
@@ -63,7 +57,7 @@ async function run() {
   await environment.initialize();
 
   server.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    logger.info(`Server listening on port ${port}`);
   });
 }
 
