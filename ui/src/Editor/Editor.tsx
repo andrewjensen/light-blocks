@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import Blockly, { WorkspaceSvg } from 'blockly';
+import { useEffect, useRef } from 'react';
+import Blockly from 'blockly';
 import { useBlocklyWorkspace } from 'react-blockly/dist';
 import { useParams } from 'react-router-dom';
 
@@ -37,15 +37,6 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
   const program = programs.find(program => program.id === programId);
 
   const blocklyRef = useRef(null);
-  const [source, setSource] = useState<string>('');
-  const debouncedSource = useDebounce(source, DEBOUNCE_TIME_MS);
-
-  const handleWorkspaceDidChange = (changedWorkspace: WorkspaceSvg) => {
-    const dom = Blockly.Xml.workspaceToDom(changedWorkspace);
-    const text = Blockly.Xml.domToPrettyText(dom);
-
-    setSource(text);
-  }
 
   const { workspace, xml } = useBlocklyWorkspace({
     ref: blocklyRef,
@@ -61,11 +52,12 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
     },
     toolboxConfiguration: TOOLBOX,
     initialXml: program?.source,
-    onWorkspaceChange: handleWorkspaceDidChange,
   });
 
+  const debouncedSource = useDebounce(xml, DEBOUNCE_TIME_MS);
+
   useEffect(() => {
-    if (debouncedSource !== '') {
+    if (debouncedSource !== null && debouncedSource !== '') {
       onUpdateSource(programId, debouncedSource);
     }
   }, [debouncedSource, programId, onUpdateSource]);

@@ -29,8 +29,7 @@ export async function createProgram(title: string): Promise<ProgramMeta> {
   return body;
 }
 
-// TODO: lock down `params`
-export async function editProgram(programId: number, params: unknown): Promise<ProgramMeta> {
+export async function editProgram(programId: number, params: { source: string }): Promise<ProgramMeta> {
   const response = await fetch(`${SERVER_HOST}/api/programs/${programId}`, {
     method: 'PUT',
     body: JSON.stringify(params),
