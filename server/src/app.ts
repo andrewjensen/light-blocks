@@ -7,22 +7,30 @@ import { text as textBodyParser } from 'body-parser';
 
 import { connectToDB } from './db';
 import Interpreter, { InterpreterEvent } from './Interpreter';
-import Environment from './Environment';
+import HueEnvironment from './HueEnvironment';
+import LifxEnvironment from './LifxEnvironment';
 import installProgramRoutes from './api/programs';
 import installInterpreterRoutes from './api/interpreter';
 import logger from './logger';
+import { AdapterName, LightEnvironment } from './types';
 
-const REQUIRED_ENV_VARS = [
-  'HUE_BRIDGE_IP_ADDRESS',
-  'HUE_BRIDGE_CLIENT_KEY',
-  'HUE_BRIDGE_USER',
-];
+const ADAPTER_ENV_VARS: Record<AdapterName, string[]> = {
+  'HUE': [
+    'HUE_BRIDGE_IP_ADDRESS',
+    'HUE_BRIDGE_CLIENT_KEY',
+    'HUE_BRIDGE_USER',
+  ],
+  'LIFX': [
+    'LIFX_API_TOKEN',
+  ],
+};
 
-for (let envVar of REQUIRED_ENV_VARS) {
-  if (!process.env[envVar]) {
-    throw new Error(`Missing required env var: ${envVar}`);
-  }
-}
+const ADAPTER_CREATORS: Record<AdapterName, () => LightEnvironment> = {
+  'HUE': () => new HueEnvironment(),
+  'LIFX': () => new LifxEnvironment(),
+};
+
+validateEnv();
 
 const DIR_STATIC = path.resolve(__dirname, '../../ui/build/');
 
@@ -43,7 +51,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(DIR_STATIC));
 }
 
-const environment = new Environment();
+const adapterType = process.env['ADAPTER_TYPE'] as AdapterName;
+const environment = ADAPTER_CREATORS[adapterType]();
 const interpreter = new Interpreter(environment);
 interpreter.setEventListener((event: InterpreterEvent) => {
   io.emit('message', event);
@@ -59,6 +68,29 @@ async function run() {
   server.listen(port, () => {
     logger.info(`Server listening on port ${port}`);
   });
+}
+
+function validateEnv() {
+  const adapterType = process.env['ADAPTER_TYPE'];
+
+  if (!adapterType) {
+    throw new Error(`Missing required env var: ADAPTER_TYPE`);
+  }
+
+  if (!validateAdapterType(adapterType)) {
+    throw new Error(`Invalid value for ADAPTER_TYPE env var: ${adapterType}`);
+  }
+
+  const adapterSpecificEnvVars = ADAPTER_ENV_VARS[adapterType];
+  for (let envVar of adapterSpecificEnvVars) {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required env var for adapter: ${envVar}`);
+    }
+  }
+}
+
+function validateAdapterType(adapterType: string): adapterType is AdapterName {
+  return ADAPTER_ENV_VARS.hasOwnProperty(adapterType);
 }
 
 run();
