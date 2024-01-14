@@ -5,6 +5,16 @@ import { pause } from './timingUtils';
 import logger from './logger';
 import { LightEnvironment } from './types';
 
+type TransitionOptions = {
+  isOn: boolean;
+  durationMs: number;
+  color?: {
+    hue: number;
+    saturation: number;
+    brightness: number;
+  }
+}
+
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 
 const SELECTOR_ALL = 'all';
@@ -83,15 +93,40 @@ export default class LifxEnvironment implements LightEnvironment {
 
   async setColor(lightId: number | null, hue: number, saturation: number, brightness: number) {
     const hueRotated = modulo(hue, 360);
-    const hueScaled = hueRotated * 182.0;
 
-    const saturationClamped = clamp(saturation, 0, 100);
-    const brightnessClamped = clamp(brightness, 0, 100);
+    const saturationClamped = clamp(saturation / 100, 0.0, 1.0);
+    const brightnessClamped = clamp(brightness / 100, 0.0, 1.0);
 
-    logger.debug(`setColor ${hueScaled} ${saturationClamped} ${brightnessClamped}`);
+    logger.debug(`setColor ${hueRotated} ${saturationClamped} ${brightnessClamped}`);
 
-    // TODO: implement
-    return Promise.resolve();
+    if (lightId) {
+      const lifxId = this.numericIdsToLifxIds[lightId];
+      return Promise.all([
+        setLightState(lifxId, {
+          isOn: true,
+          durationMs: DEFAULT_TRANSITION_TIME_MS,
+          color: {
+            hue: hueRotated,
+            saturation: saturationClamped,
+            brightness: brightnessClamped,
+          }
+        }),
+        pause(DEFAULT_TRANSITION_TIME_MS),
+      ]);
+    } else {
+      return Promise.all([
+        setLightState(SELECTOR_ALL, {
+          isOn: true,
+          durationMs: DEFAULT_TRANSITION_TIME_MS,
+          color: {
+            hue: hueRotated,
+            saturation: saturationClamped,
+            brightness: brightnessClamped,
+          }
+        }),
+        pause(DEFAULT_TRANSITION_TIME_MS),
+      ]);
+    }
   }
 }
 
@@ -106,18 +141,18 @@ async function getAllLights() {
   return responseJson;
 }
 
-type TransitionOptions = {
-  isOn: boolean;
-  durationMs: number;
-}
-
 async function setLightState(selector: string, options: TransitionOptions) {
-  const requestBody = {
+  const requestBody: Record<string, any> = {
     power: options.isOn ? 'on' : 'off',
-    // TODO: handle duration
-    // duration: options.durationMs / 1000,
+    duration: options.durationMs / 1000,
   };
 
+  if (options.color) {
+    requestBody['color'] = `hue:${options.color.hue} saturation:${options.color.saturation} brightness:${options.color.brightness}`;
+  }
+
+  // See:
+  // https://api.developer.lifx.com/reference/set-state
   const response = await fetch(`https://api.lifx.com/v1/lights/${selector}/state`, {
     method: 'PUT',
     headers: {
