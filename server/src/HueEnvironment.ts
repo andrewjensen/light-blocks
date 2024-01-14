@@ -4,12 +4,13 @@ import { Api } from 'node-hue-api/dist/esm/api/Api';
 import { clamp, modulo } from './mathUtils';
 import { pause } from './timingUtils';
 import logger from './logger';
+import { LightEnvironment } from './types';
 
 const DEFAULT_TRANSITION_TIME_MS = 1000;
 
 const GROUP_NAME = 'light-blocks-v1';
 
-export default class Environment {
+export default class HueEnvironment implements LightEnvironment {
   private client: Api | null
   private group: model.Group | null
   private reachableLightIds: number[]
@@ -21,7 +22,7 @@ export default class Environment {
   }
 
   async initialize() {
-    logger.info('Initializing environment...');
+    logger.info('Initializing Philips Hue light environment...');
 
     const username = process.env.HUE_BRIDGE_USER || '';
     const ipAddress = process.env.HUE_BRIDGE_IP_ADDRESS || '';
