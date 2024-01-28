@@ -12,6 +12,8 @@ import installProgramRoutes from './api/programs';
 import installInterpreterRoutes from './api/interpreter';
 import logger from './logger';
 
+import 'dotenv/config'
+
 const REQUIRED_ENV_VARS = [
   'HUE_BRIDGE_IP_ADDRESS',
   'HUE_BRIDGE_CLIENT_KEY',
@@ -54,7 +56,9 @@ installInterpreterRoutes(app, interpreter);
 
 async function run() {
   await connectToDB();
-  await environment.initialize();
+  // Da error porque no se conecta a las luces Philips HUE, aunque no se conecte tendria que arrancar el servidor, ya que hay mas environment...
+  // It gives an error because it does not connect to the Philips HUE lights, even if it does not connect, it would have to start the server, since there is more environment...
+//  await environment.initialize();
 
   server.listen(port, () => {
     logger.info(`Server listening on port ${port}`);

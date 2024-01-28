@@ -26,6 +26,8 @@ export default class Environment {
     const username = process.env.HUE_BRIDGE_USER || '';
     const ipAddress = process.env.HUE_BRIDGE_IP_ADDRESS || '';
 
+    //console.log('username',username, 'ipAddress',ipAddress )
+
     this.client =
       await NodeHueApi
         .api

@@ -9,6 +9,11 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@blockly/theme-dark": "^6.0.5",
+    "@blockly/theme-deuteranopia": "^5.0.5",
+    "@blockly/theme-highcontrast": "^5.0.5",
+    "@blockly/theme-modern": "^5.0.5",
+    "@blockly/theme-tritanopia": "^5.0.5",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "react": "^17.0.2",

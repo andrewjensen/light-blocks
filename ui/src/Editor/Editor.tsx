@@ -11,6 +11,19 @@ import LightBlocksTheme from './theme';
 import FieldColorComponents from './FieldColorComponents';
 import useDebounce from './useDebounce';
 
+// @ts-ignore
+import ThemeDarkTheme from '@blockly/theme-dark';
+// @ts-ignore
+import ThemeDeuteranopia from '@blockly/theme-deuteranopia';
+// // @ts-ignore
+// import ThemeHackermode from '@blockly/theme-hackermode';
+// @ts-ignore
+import ThemeHighcontrast from '@blockly/theme-highcontrast';
+// @ts-ignore
+import ThemeModern from '@blockly/theme-modern';
+// @ts-ignore
+import ThemeTritanopia from '@blockly/theme-tritanopia';
+
 interface Props {
   programs: ProgramMeta[]
   runningProgramId: number | null
@@ -47,7 +60,8 @@ const Editor: React.FC<Props> = ({ programs, runningProgramId, currentBlockId, o
         colour: '#ccc',
         snap: true,
       },
-      theme: LightBlocksTheme,
+//      theme: LightBlocksTheme,
+      theme: ThemeDarkTheme,
       renderer: 'zelos'
     },
     toolboxConfiguration: TOOLBOX,
